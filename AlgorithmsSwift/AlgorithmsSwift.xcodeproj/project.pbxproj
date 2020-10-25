@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		688A331C2545057300F76C56 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A331B2545057300F76C56 /* main.swift */; };
 		688A33512545083300F76C56 /* Test1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A33502545083300F76C56 /* Test1.swift */; };
-		688A335D2545094A00F76C56 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 688A335C2545094A00F76C56 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -166,7 +165,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				688A335D2545094A00F76C56 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
