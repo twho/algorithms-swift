@@ -30,18 +30,6 @@ class Graph {
             self.edges.insert(edge)
         }
     }
-    
-    public static func createDefaultGraph(withNegativeEdge: Bool) -> Graph {
-        let graph = Graph()
-        graph.addEdge(0, 1, withNegativeEdge ? -1 : 1)  // add edge 0-1
-        graph.addEdge(0, 2, 4);                         // add edge 0-2
-        graph.addEdge(2, 6, 1);                         // add edge 2-6
-        graph.addEdge(1, 3, 2);                         // add edge 1-3
-        graph.addEdge(3, 1, 1);                         // add edge 3-1
-        graph.addEdge(4, 3, withNegativeEdge ? -3 : 3); // add edge 4-3
-        graph.addEdge(4, 5, 1);                         // add edge 4-5
-        return graph
-    }
 }
 
 struct Vertex: Hashable {

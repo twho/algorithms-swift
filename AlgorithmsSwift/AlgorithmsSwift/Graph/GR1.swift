@@ -25,7 +25,7 @@ class GR1 {
         var visited = Set<Vertex>()
         var output = [Int]()
         
-        for vertex in graph.vertices {
+        for vertex in graph.vertices.sorted(by: { $0.val < $1.val }) {
             dfsHelper(vertex, graph.edges, &visited, &output)
         }
         
