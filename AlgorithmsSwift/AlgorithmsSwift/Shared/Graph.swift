@@ -6,30 +6,51 @@
 //
 
 class Graph {
-    var vertices: [Vertex]
-    var edges: Set<Edge>
+    // The adjacencyList does not have weight information stored.
+    var adjacencyLists: [Vertex : Set<Vertex>]
     
     public init() {
-        vertices = [Vertex]()
-        edges = Set<Edge>()
+        adjacencyLists = [Vertex : Set<Vertex>]()
     }
     
-    public func addEdge(_ val1: Int, _ val2: Int, _ weight: Int) {
+    public func addEdge(from val1: Int, to val2: Int) {
         let vertex1 = Vertex(val1)
-        if !self.vertices.contains(vertex1) {
-            self.vertices.append(vertex1)
-        }
-        
         let vertex2 = Vertex(val2)
-        if !self.vertices.contains(vertex2) {
-            self.vertices.append(vertex2)
+        
+        if self.adjacencyLists[vertex1] == nil {
+            self.adjacencyLists[vertex1] = Set<Vertex>()
         }
         
-        let edge = Edge(vertex1, vertex2, weight)
-        if !self.edges.contains(edge) {
-            self.edges.insert(edge)
+        if !self.adjacencyLists[vertex1]!.contains(vertex2) {
+            self.adjacencyLists[vertex1]!.insert(vertex2)
         }
     }
+    /**
+     Calculate the in degree of a vertex. The number of vertices pointing to the vertex is called in-degree of the vertex, while
+     the number of vertices the vertex is pointing to is called out-degree of the vertex.
+     
+     - Returns: A dictionary with Vertex as keys and the in degree of the Vertex as values.
+     */
+    public func calculateInDegreeOfVertices() -> [Vertex : Int] {
+        var inDegrees = [Vertex: Int]()
+
+        // Set the initial in degree of every vertex to be 0.
+        for vertex in self.adjacencyLists.keys {
+            inDegrees[vertex] = 0
+        }
+
+        // Calculate the in degree of each vertex in the graph.
+        for vertex in self.adjacencyLists.keys {
+            if let adjacencyList = self.adjacencyLists[vertex] {
+                for otherVertex in adjacencyList {
+                    inDegrees[otherVertex] = (inDegrees[otherVertex] ?? 0) + 1
+                }
+            }
+        }
+        
+        
+        return inDegrees
+      }
 }
 
 struct Vertex: Hashable {

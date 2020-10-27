@@ -25,8 +25,10 @@ class GR1 {
         var visited = Set<Vertex>()
         var output = [Int]()
         
-        for vertex in graph.vertices.sorted(by: { $0.val < $1.val }) {
-            dfsHelper(vertex, graph.edges, &visited, &output)
+        for vertex in graph.adjacencyLists.keys.sorted(by: { $0.val < $1.val }) {
+            if !visited.contains(vertex) {
+                dfsHelper(vertex, graph.adjacencyLists, &visited, &output)
+            }
         }
         
         return output
@@ -39,21 +41,19 @@ class GR1 {
      - Parameter visited:   The visisted vertices in the current traverse.
      - Parameter output:    The pointer to the result of DFS traverse.
      */
-    private func dfsHelper(_ vertex: Vertex, _ edges: Set<Edge>, _ visited: inout Set<Vertex>, _ output: inout [Int]) {
-        if visited.contains(vertex) {
-            return
-        }
-        
+    private func dfsHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ visited: inout Set<Vertex>, _ output: inout [Int]) {
         visited.insert(vertex)
         output.append(vertex.val)
-        for edge in edges {
-            if edge.src == vertex {
-                dfsHelper(edge.dest, edges, &visited, &output)
+        if let adjacencyList = adjacencyLists[vertex] {
+            for otherVertex in adjacencyList {
+                if !visited.contains(otherVertex) {
+                    dfsHelper(otherVertex, adjacencyLists, &visited, &output)
+                }
             }
         }
     }
     /**
-     The function that output the value of vertices in topological order. In a edge in a directed graph, the vertex used as the source of the edge
+     The function that output the value of vertices in topological order using DFS method. In topological sort, the vertex used as the source of the edge
      must be printed before the destination of the edge. Note that a graph could have multiple topological output. In addition, a graph has to be
      a directed acyclic graph (DAG) in order to be sorted topologically.
      
@@ -61,9 +61,36 @@ class GR1 {
      
      - Returns: An integer array of topological sorting result.
      */
-    func topologicalSort(_ graph: Graph) -> [Int] {
+    func topologicalSortByDFS(_ graph: Graph) -> [Int] {
         var output = [Int]()
+        var visited = Set<Vertex>()
+        
+        // Find the sink vertex to before sorting.
+        let sinkVertices = graph.calculateInDegreeOfVertices().filter({ (_, indegree) -> Bool in
+            return indegree == 0
+        }).map { (vertex, _) -> Vertex in
+            return vertex
+        }
+        
+        for sinkVertex in sinkVertices {
+            if !visited.contains(sinkVertex) {
+                output = topologicalSortHelper(sinkVertex, graph.adjacencyLists, &visited) + output
+            }
+        }
         
         return output
+    }
+    
+    private func topologicalSortHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ visited: inout Set<Vertex>) -> [Int] {
+        var result = [Int]()
+        if let adjacencyList = adjacencyLists[vertex] {
+            for otherVertex in adjacencyList {
+                if !visited.contains(otherVertex) {
+                    result += topologicalSortHelper(otherVertex, adjacencyLists, &visited)
+                }
+            }
+        }
+        visited.insert(vertex)
+        return [vertex.val] + result
     }
 }
