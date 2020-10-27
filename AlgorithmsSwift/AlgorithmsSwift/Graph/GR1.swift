@@ -4,15 +4,7 @@
 //
 //  Created by Michael Ho on 10/25/20.
 //
-/**
- Graph
- 
- Terminology in Graph
- - Connected Component:             Components that are connected in the graph.
- - Strongly Connected Component:    A group of Components in a directed graph that have edges allow them to reach each other.
- - Source vertex:                   The vertex in the graph that has no incoming edges. (Topological Sorting)
- - Sink vertex:                     The vertex in the graph that has no outgoing edges. (Topological Sorting)
- */
+
 class GR1 {
     /**
      The function traverses through the undirected graph using DFS method. Runtime: O(V + E), where V represents vertices and E represents edges.
@@ -23,7 +15,7 @@ class GR1 {
      */
     func dfs(_ graph: Graph) -> [Int] {
         var visited = Set<Vertex>()
-        var output = [Int]()
+        var output = [Vertex]()
         
         for vertex in graph.adjacencyLists.keys.sorted(by: { $0.val < $1.val }) {
             if !visited.contains(vertex) {
@@ -31,7 +23,9 @@ class GR1 {
             }
         }
         
-        return output
+        return output.map { (vertex) -> Int in
+            return vertex.val
+        }
     }
     /**
      The function is used as the recursive method in DFS.
@@ -41,9 +35,8 @@ class GR1 {
      - Parameter visited:   The visisted vertices in the current traverse.
      - Parameter output:    The pointer to the result of DFS traverse.
      */
-    private func dfsHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ visited: inout Set<Vertex>, _ output: inout [Int]) {
+    private func dfsHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ visited: inout Set<Vertex>, _ output: inout [Vertex]) {
         visited.insert(vertex)
-        output.append(vertex.val)
         if let adjacencyList = adjacencyLists[vertex] {
             for otherVertex in adjacencyList {
                 if !visited.contains(otherVertex) {
@@ -51,11 +44,46 @@ class GR1 {
                 }
             }
         }
+        output.append(vertex)
+    }
+    /**
+     Find strongly connected componenets by DFS. SCC is defined as a group of components in a directed graph that have edges allow them to reach each other.
+     It takes two rounds of DFS to find SCCs. Runtime: O(V + E)
+     
+     - Parameter graph: An undirected graph.
+     
+     - Returns: A 2D array. Each element in the array represents a SCC, which is a group of components in the graph.
+     */
+    func findSCCsByDFS(_ graph: Graph) -> Set<Set<Int>> {
+        var visited = Set<Vertex>()
+        var stack = [Vertex]()
+        for vertex in graph.adjacencyLists.keys {
+            if !visited.contains(vertex) {
+                dfsHelper(vertex, graph.adjacencyLists, &visited, &stack)
+            }
+        }
+        
+        visited = Set<Vertex>()
+        var output = Set<Set<Int>>()
+        let reversedGraph = graph.getReversedGraph()
+        while !stack.isEmpty {
+            var SCC = [Vertex]()
+            let vertex = stack.removeLast()
+            if !visited.contains(vertex) {
+                dfsHelper(vertex, reversedGraph.adjacencyLists, &visited, &SCC)
+                let set = Set(SCC.map({ (vertex) -> Int in
+                    vertex.val
+                }))
+                output.insert(set)
+            }
+        }
+        
+        return output
     }
     /**
      The function that output the value of vertices in topological order using DFS method. In topological sort, the vertex used as the source of the edge
      must be printed before the destination of the edge. Note that a graph could have multiple topological output. In addition, a graph has to be
-     a directed acyclic graph (DAG) in order to be sorted topologically.
+     a directed acyclic graph (DAG) in order to be sorted topologically. Runtime: O(V + E)
      
      - Parameter graph: An undirected graph.
      
@@ -64,17 +92,11 @@ class GR1 {
     func topologicalSortByDFS(_ graph: Graph) -> [Int] {
         var output = [Int]()
         var visited = Set<Vertex>()
+        let sourceVertices = graph.getSourceVertices()
         
-        // Find the sink vertex to before sorting.
-        let sinkVertices = graph.calculateInDegreeOfVertices().filter({ (_, indegree) -> Bool in
-            return indegree == 0
-        }).map { (vertex, _) -> Vertex in
-            return vertex
-        }
-        
-        for sinkVertex in sinkVertices {
-            if !visited.contains(sinkVertex) {
-                output = topologicalSortHelper(sinkVertex, graph.adjacencyLists, &visited) + output
+        for sourceVertex in sourceVertices {
+            if !visited.contains(sourceVertex) {
+                output = topologicalSortHelper(sourceVertex, graph.adjacencyLists, &visited) + output
             }
         }
         
