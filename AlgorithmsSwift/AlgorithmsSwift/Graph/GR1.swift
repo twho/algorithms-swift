@@ -30,10 +30,10 @@ class GR1 {
     /**
      The function is used as the recursive method in DFS.
      
-     - Parameter vertex:    The vertex to explore its relevant edges.
-     - Parameter edges:     The edges in the graph.
-     - Parameter visited:   The visisted vertices in the current traverse.
-     - Parameter output:    The pointer to the result of DFS traverse.
+     - Parameter vertex:            The vertex to explore its relevant edges.
+     - Parameter adjacencyLists:    The adjacency lists used in the graph.
+     - Parameter visited:           The visisted vertices in the current traverse.
+     - Parameter output:            The pointer to the result of DFS traverse.
      */
     private func dfsHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ visited: inout Set<Vertex>, _ output: inout [Vertex]) {
         visited.insert(vertex)
@@ -52,9 +52,10 @@ class GR1 {
      
      - Parameter graph: An undirected graph.
      
-     - Returns: A 2D array. Each element in the array represents a SCC, which is a group of components in the graph.
+     - Returns: A 2D set. Each element in the set represents a SCC, which is a group of components in the graph.
      */
     func findSCCsByDFS(_ graph: Graph) -> Set<Set<Int>> {
+        // Perform a normal DFS.
         var visited = Set<Vertex>()
         var stack = [Vertex]()
         for vertex in graph.adjacencyLists.keys {
@@ -62,7 +63,7 @@ class GR1 {
                 dfsHelper(vertex, graph.adjacencyLists, &visited, &stack)
             }
         }
-        
+        // Reverse the graph to for 2nd round DFS.
         visited = Set<Vertex>()
         var output = Set<Set<Int>>()
         let reversedGraph = graph.getReversedGraph()
@@ -77,7 +78,6 @@ class GR1 {
                 output.insert(set)
             }
         }
-        
         return output
     }
     /**
@@ -90,29 +90,18 @@ class GR1 {
      - Returns: An integer array of topological sorting result.
      */
     func topologicalSortByDFS(_ graph: Graph) -> [Int] {
-        var output = [Int]()
+        var output = [Vertex]()
         var visited = Set<Vertex>()
         let sourceVertices = graph.getSourceVertices()
         
         for sourceVertex in sourceVertices {
             if !visited.contains(sourceVertex) {
-                output = topologicalSortHelper(sourceVertex, graph.adjacencyLists, &visited) + output
+                dfsHelper(sourceVertex, graph.adjacencyLists, &visited, &output)
             }
         }
         
-        return output
-    }
-    
-    private func topologicalSortHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ visited: inout Set<Vertex>) -> [Int] {
-        var result = [Int]()
-        if let adjacencyList = adjacencyLists[vertex] {
-            for otherVertex in adjacencyList {
-                if !visited.contains(otherVertex) {
-                    result += topologicalSortHelper(otherVertex, adjacencyLists, &visited)
-                }
-            }
+        return output.reversed().map { (vertex) -> Int in
+            return vertex.val
         }
-        visited.insert(vertex)
-        return [vertex.val] + result
     }
 }
