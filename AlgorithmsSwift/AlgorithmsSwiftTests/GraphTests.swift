@@ -9,6 +9,7 @@ import XCTest
 
 class GraphTests: XCTestCase {
     let gr1 = GR1()
+    let gr2 = GR2()
 
     func testDFSTraverse() {
         let graph = Graph()
@@ -78,5 +79,46 @@ class GraphTests: XCTestCase {
             [5, 2, 3, 4, 1, 0]
         ]
         XCTAssertTrue(possibleDFSPaths.contains(gr1.topologicalSortByDFS(graph)))
+    }
+    
+    func testFindBridge() {
+        let graph = Graph()
+        graph.addEdge(from: 1, to: 0)   // add edge 1-0
+        graph.addEdge(from: 2, to: 0)   // add edge 2-0
+        graph.addEdge(from: 3, to: 2)   // add edge 3-2
+        graph.addEdge(from: 4, to: 2)   // add edge 4-2
+        graph.addEdge(from: 4, to: 3)   // add edge 4-3
+        graph.addEdge(from: 3, to: 0)   // add edge 3-0
+        graph.addEdge(from: 4, to: 0)   // add edge 4-0
+        let expected = [[0, 1]]
+        XCTAssertEqual(expected, gr1.findBridgeInGraph(graph))
+    }
+    
+    func test2SATProblem1() {
+        /**
+         The Conjunctive Normal Form (CNF) being handled is: (∨ is OR and ∧ is AND)
+         (x1 ∨ x2) ∧ (¬x2 ∨ x3) ∧ (¬x1 ∨ ¬x2) ∧ (x3 ∨ x4) ∧ (¬x3 ∨ x5) ∧ (¬x4 ∨ ¬x5) ∧ (¬x3 ∨ x4)
+         */
+        let input = (
+            variables: 5,
+            clauses: 7,
+            clause1: [1, -2, -1, 3, -3, -4, -3],    // Left side of each clause
+            clause2: [2, 3, -2, 4, 5, -4, -5, 4]    // Right side of each clause
+        )
+        XCTAssertTrue(gr2.is2Satisfiable(input.variables, input.clauses, clauseLeft: input.clause1, clauseRigt: input.clause2))
+    }
+    
+    func test2SATProblem2() {
+        /**
+         The Conjunctive Normal Form (CNF) being handled is: (∨ is OR and ∧ is AND)
+         (x1 ∨ x2) ∧ (¬x1 ∨ x2) ∧ (x1 ∨ ¬x2) ∧ (¬x1 ∨ ¬x2)
+         */
+        let input = (
+            variables: 2,
+            clauses: 4,
+            clause1: [1, -1, 1, -1],    // Left side of each clause
+            clause2: [2, 2, -2, -2]     // Right side of each clause
+        )
+        XCTAssertFalse(gr2.is2Satisfiable(input.variables, input.clauses, clauseLeft: input.clause1, clauseRigt: input.clause2))
     }
 }

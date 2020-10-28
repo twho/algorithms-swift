@@ -14,6 +14,7 @@
 		688A33972546984C00F76C56 /* GraphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A33962546984C00F76C56 /* GraphTests.swift */; };
 		688A339C2546986F00F76C56 /* GR1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A337F2546933100F76C56 /* GR1.swift */; };
 		688A33A72546990000F76C56 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A33842546957D00F76C56 /* Graph.swift */; };
+		68EC2E002549415200623738 /* GR2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682F8DD12547E0AC00C371FF /* GR2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -224,6 +225,7 @@
 				688A33A72546990000F76C56 /* Graph.swift in Sources */,
 				688A339C2546986F00F76C56 /* GR1.swift in Sources */,
 				688A33972546984C00F76C56 /* GraphTests.swift in Sources */,
+				68EC2E002549415200623738 /* GR2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
