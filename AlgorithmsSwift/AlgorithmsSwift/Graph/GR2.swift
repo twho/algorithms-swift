@@ -37,4 +37,62 @@ class GR2 {
         }
         return true
     }
+    /**
+     Bridge problem. An edge in an undirected connected graph is a bridge if removing it disconnects the graph. The solution uses DFS and
+     find if the current edge (a, b) is a bridge by checking if there are other ways from a to b. If there isn't any, then the current edge (a, b) is a bridge.
+     Runtime: O(V+E) by Tarjan's algorithm. Example: https://leetcode.com/problems/critical-connections-in-a-network/
+     
+     - Parameter graph: An undirected graph.
+     
+     - Returns: A 2D integer array of bridges. Each bridge element is in the form of [x, y].
+     */
+    func findBridge(_ graph: Graph) -> [[Int]] {
+        var output = [[Int]]()
+        var visited = Set<Vertex>()
+        // Note the discover time and the discover time of the earliest reachable vertex for a vertex.
+        var orders = [Vertex : (parent: Vertex?, discover: Int, low: Int)]()
+        var counter = 0
+        for vertex in graph.adjacencyLists.keys {
+            if !visited.contains(vertex) {
+                findBridgeHelper(vertex, graph.adjacencyLists, &counter, &visited, &orders, &output)
+            }
+        }
+        return output
+    }
+    /**
+     The recursive method used to perform DFS search and find bridges.
+     
+     - Parameter vertex:            The vertex to perform DFS on.
+     - Parameter adjacencyLists:    The adjacency lists used in the graph.
+     - Parameter counter:           The counter used to record discover time and lowest value (earliest reachable time).
+     - Parameter visited:           The visited vertices in the current search.
+     - Parameter orders:            The dictionary that stores parent, discover time and lowest value.
+     - Parameter output:            The output used to store bridges in the graph.
+     */
+    private func findBridgeHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ counter: inout Int, _ visited: inout Set<Vertex>,
+                                  _ orders: inout [Vertex : (parent: Vertex?, discover: Int, low: Int)], _ output: inout [[Int]]) {
+        visited.insert(vertex)
+        counter += 1
+        orders[vertex] = (orders[vertex]?.parent, counter, counter)
+        if let adjacencyList = adjacencyLists[vertex] {
+            for child in adjacencyList {
+                if !visited.contains(child) {
+                    // Initialize the numbers for the child
+                    orders[child] = (vertex, counter, counter)
+                    // Perform DFS
+                    findBridgeHelper(child, adjacencyLists, &counter, &visited, &orders, &output)
+                    // Check if the child has other ancestors
+                    orders[vertex]!.low = min(orders[child]!.low, orders[vertex]!.low)
+                    // If the lowest (found earliest in DFS) vertex reachable from child is still after
+                    // the current vertex, then it is a bridge.
+                    if orders[child]!.low > orders[vertex]!.discover {
+                        output.append([vertex.val, child.val])
+                    }
+                } else if child != orders[vertex]?.parent {
+                    // Update the lowest reachable value if needed (the child's parent is not the current vertex.)
+                    orders[vertex]!.low = min(orders[child]!.low, orders[vertex]!.low)
+                }
+            }
+        }
+    }
 }

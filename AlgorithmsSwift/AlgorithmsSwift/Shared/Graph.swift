@@ -6,10 +6,12 @@
 //
 
 class Graph {
+    private var isDirected = true
     // The adjacencyList does not have weight information stored.
     var adjacencyLists: [Vertex : Set<Vertex>]
     
-    public init() {
+    public init(isDirected: Bool = true) {
+        self.isDirected = isDirected
         adjacencyLists = [Vertex : Set<Vertex>]()
     }
     
@@ -20,9 +22,13 @@ class Graph {
         if self.adjacencyLists[vertex1] == nil {
             self.adjacencyLists[vertex1] = Set<Vertex>()
         }
+        self.adjacencyLists[vertex1]!.insert(vertex2)
         
-        if !self.adjacencyLists[vertex1]!.contains(vertex2) {
-            self.adjacencyLists[vertex1]!.insert(vertex2)
+        if !self.isDirected {
+            if self.adjacencyLists[vertex2] == nil {
+                self.adjacencyLists[vertex2] = Set<Vertex>()
+            }
+            self.adjacencyLists[vertex2]!.insert(vertex1)
         }
     }
     /**

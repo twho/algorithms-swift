@@ -82,16 +82,17 @@ class GraphTests: XCTestCase {
     }
     
     func testFindBridge() {
-        let graph = Graph()
-        graph.addEdge(from: 1, to: 0)   // add edge 1-0
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 1)   // add edge 0-1
+        graph.addEdge(from: 1, to: 2)   // add edge 1-2
         graph.addEdge(from: 2, to: 0)   // add edge 2-0
-        graph.addEdge(from: 3, to: 2)   // add edge 3-2
-        graph.addEdge(from: 4, to: 2)   // add edge 4-2
-        graph.addEdge(from: 4, to: 3)   // add edge 4-3
-        graph.addEdge(from: 3, to: 0)   // add edge 3-0
-        graph.addEdge(from: 4, to: 0)   // add edge 4-0
-        let expected = [[0, 1]]
-        XCTAssertEqual(expected, gr1.findBridgeInGraph(graph))
+        graph.addEdge(from: 1, to: 3)   // add edge 1-3
+        graph.addEdge(from: 3, to: 4)   // add edge 3-4
+        graph.addEdge(from: 4, to: 5)   // add edge 4-5
+        graph.addEdge(from: 5, to: 3)   // add edge 5-3
+        let expected = [[3, 1], [1, 3]]
+        let output = gr2.findBridge(graph)
+        XCTAssertTrue(expected[0] == output.first! || expected[1] == output.first!)
     }
     
     func test2SATProblem1() {
