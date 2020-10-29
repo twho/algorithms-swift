@@ -9,6 +9,22 @@ class Graph {
     private var isDirected = true
     // The adjacencyList does not have weight information stored.
     var adjacencyLists: [Vertex : Set<Vertex>]
+    /**
+     Returns all the undirected edges if the graph is undirected.
+     For example, edges [1, 0] and [0, 1] are counted once and output as either [1, 0] or [0, 1].
+     */
+    var undirectedEdges: [(src: Vertex, dest: Vertex)] {
+        guard !self.isDirected else { return [] }
+        
+        var edges = [(src: Vertex, dest: Vertex)]()
+        for vertex in self.adjacencyLists.keys {
+            for otherVertex in self.adjacencyLists[vertex]! {
+                edges.append((vertex, otherVertex))
+                adjacencyLists[otherVertex]!.remove(vertex)
+            }
+        }
+        return edges
+    }
     
     public init(isDirected: Bool = true) {
         self.isDirected = isDirected

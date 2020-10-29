@@ -10,6 +10,7 @@ import XCTest
 class GraphTests: XCTestCase {
     let gr1 = GR1()
     let gr2 = GR2()
+    let gr3 = GR3()
 
     func testDFSTraverse() {
         let graph = Graph()
@@ -121,5 +122,26 @@ class GraphTests: XCTestCase {
             clause2: [2, 2, -2, -2]     // Right side of each clause
         )
         XCTAssertFalse(gr2.is2Satisfiable(input.variables, input.clauses, clauseLeft: input.clause1, clauseRigt: input.clause2))
+    }
+    
+    func testUnionFind1() {
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 1)   // add edge 0-1
+        graph.addEdge(from: 1, to: 2)   // add edge 1-2
+        graph.addEdge(from: 2, to: 0)   // add edge 2-0
+        graph.addEdge(from: 1, to: 3)   // add edge 1-3
+        graph.addEdge(from: 3, to: 4)   // add edge 3-4
+        graph.addEdge(from: 4, to: 5)   // add edge 4-5
+        graph.addEdge(from: 5, to: 3)   // add edge 5-3
+        XCTAssertTrue(gr3.isCycleExisting(graph))
+    }
+    
+    func testUnionFind2() {
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 1)   // add edge 0-1
+        graph.addEdge(from: 1, to: 2)   // add edge 1-2
+        graph.addEdge(from: 2, to: 3)   // add edge 2-3
+        graph.addEdge(from: 0, to: 4)   // add edge 0-4
+        XCTAssertFalse(gr3.isCycleExisting(graph))
     }
 }
