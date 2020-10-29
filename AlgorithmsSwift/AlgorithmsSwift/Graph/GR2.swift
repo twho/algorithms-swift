@@ -69,19 +69,20 @@ class GR2 {
      - Parameter orders:            The dictionary that stores parent, discover time and lowest value.
      - Parameter output:            The output used to store bridges in the graph.
      */
-    private func findBridgeHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ counter: inout Int, _ visited: inout Set<Vertex>,
+    private func findBridgeHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Edge>], _ counter: inout Int, _ visited: inout Set<Vertex>,
                                   _ orders: inout [Vertex : (parent: Vertex?, discover: Int, low: Int)], _ output: inout [[Int]]) {
         visited.insert(vertex)
         counter += 1
         orders[vertex] = (orders[vertex]?.parent, counter, counter)
         if let adjacencyList = adjacencyLists[vertex] {
-            for child in adjacencyList {
+            for edge in adjacencyList {
+                let child = edge.dest
                 if !visited.contains(child) {
                     // Initialize the numbers for the child
                     orders[child] = (vertex, counter, counter)
                     // Perform DFS
                     findBridgeHelper(child, adjacencyLists, &counter, &visited, &orders, &output)
-                    // Check if the child has other ancestors
+                    // Check if the child has other ancestors. If it does, see if the ancestor is reached earlier.
                     orders[vertex]!.low = min(orders[child]!.low, orders[vertex]!.low)
                     // If the lowest (found earliest in DFS) vertex reachable from child is still after
                     // the current vertex, then it is a bridge.

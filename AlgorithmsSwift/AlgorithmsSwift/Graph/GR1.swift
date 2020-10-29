@@ -35,12 +35,12 @@ class GR1 {
      - Parameter visited:           The visisted vertices in the current traverse.
      - Parameter output:            The pointer to the result of DFS traverse.
      */
-    private func dfsHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Vertex>], _ visited: inout Set<Vertex>, _ output: inout [Vertex]) {
+    private func dfsHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Edge>], _ visited: inout Set<Vertex>, _ output: inout [Vertex]) {
         visited.insert(vertex)
         if let adjacencyList = adjacencyLists[vertex] {
-            for otherVertex in adjacencyList {
-                if !visited.contains(otherVertex) {
-                    dfsHelper(otherVertex, adjacencyLists, &visited, &output)
+            for edge in adjacencyList {
+                if !visited.contains(edge.dest) {
+                    dfsHelper(edge.dest, adjacencyLists, &visited, &output)
                 }
             }
         }

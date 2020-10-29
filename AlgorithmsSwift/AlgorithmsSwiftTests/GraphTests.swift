@@ -12,6 +12,7 @@ class GraphTests: XCTestCase {
     let gr2 = GR2()
     let gr3 = GR3()
 
+    // MARK: - DFS
     func testDFSTraverse() {
         let graph = Graph()
         graph.addEdge(from: 0, to: 1)   // add edge 0-1
@@ -28,6 +29,7 @@ class GraphTests: XCTestCase {
         XCTAssertTrue(possibleDFSPaths.contains(gr1.dfs(graph)))
     }
     
+    // MARK: - Strongly Connected Components
     func testFindSCCs1() {
         let graph = Graph()
         graph.addEdge(from: 1, to: 0)   // add edge 1-0
@@ -64,6 +66,7 @@ class GraphTests: XCTestCase {
         XCTAssertEqual(SCCs, gr1.findSCCsByDFS(graph))
     }
     
+    // MARK: - Topological Sort
     func testTopologicalSort() {
         let graph = Graph()
         graph.addEdge(from: 5, to: 0)   // add edge 5-0
@@ -96,6 +99,7 @@ class GraphTests: XCTestCase {
         XCTAssertTrue(expected[0] == output.first! || expected[1] == output.first!)
     }
     
+    // MARK: - 2-SAT Problem
     func test2SATProblem1() {
         /**
          The Conjunctive Normal Form (CNF) being handled is: (∨ is OR and ∧ is AND)
@@ -124,6 +128,7 @@ class GraphTests: XCTestCase {
         XCTAssertFalse(gr2.is2Satisfiable(input.variables, input.clauses, clauseLeft: input.clause1, clauseRigt: input.clause2))
     }
     
+    // MARK: - Union-Find
     func testUnionFind1() {
         let graph = Graph(isDirected: false)
         graph.addEdge(from: 0, to: 1)   // add edge 0-1
@@ -143,5 +148,37 @@ class GraphTests: XCTestCase {
         graph.addEdge(from: 2, to: 3)   // add edge 2-3
         graph.addEdge(from: 0, to: 4)   // add edge 0-4
         XCTAssertFalse(gr3.isCycleExisting(graph))
+    }
+    
+    // MARK: - Miniumum Spanning Tree (MST)
+    func testMST1() {
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 1, weight: 10)   // add edge 0-1
+        graph.addEdge(from: 1, to: 3, weight: 15)   // add edge 1-3
+        graph.addEdge(from: 0, to: 3, weight: 5)    // add edge 0-3
+        graph.addEdge(from: 0, to: 2, weight: 6)    // add edge 0-2
+        graph.addEdge(from: 2, to: 3, weight: 4)    // add edge 2-3
+        let expected = 19
+        XCTAssertEqual(expected, gr3.findMinimumSpanningTree(graph))
+    }
+    
+    func testMST2() {
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 1, weight: 4)    // add edge 0-1
+        graph.addEdge(from: 0, to: 7, weight: 8)    // add edge 0-7
+        graph.addEdge(from: 1, to: 7, weight: 11)   // add edge 1-7
+        graph.addEdge(from: 1, to: 2, weight: 8)    // add edge 1-2
+        graph.addEdge(from: 7, to: 8, weight: 7)    // add edge 7-8
+        graph.addEdge(from: 8, to: 6, weight: 6)    // add edge 8-6
+        graph.addEdge(from: 7, to: 6, weight: 1)    // add edge 7-6
+        graph.addEdge(from: 6, to: 5, weight: 2)    // add edge 6-5
+        graph.addEdge(from: 2, to: 8, weight: 2)    // add edge 2-8
+        graph.addEdge(from: 2, to: 5, weight: 4)    // add edge 2-5
+        graph.addEdge(from: 2, to: 3, weight: 7)    // add edge 2-3
+        graph.addEdge(from: 3, to: 5, weight: 14)   // add edge 3-5
+        graph.addEdge(from: 3, to: 4, weight: 9)    // add edge 3-4
+        graph.addEdge(from: 5, to: 4, weight: 10)   // add edge 5-4
+        let expected = 37
+        XCTAssertEqual(expected, gr3.findMinimumSpanningTree(graph))
     }
 }

@@ -6,45 +6,59 @@
 //
 
 class Graph {
-    private var isDirected = true
+    var isDirected = true
     // The adjacencyList does not have weight information stored.
-    var adjacencyLists: [Vertex : Set<Vertex>]
+    var adjacencyLists: [Vertex : Set<Edge>]
     /**
      Returns all the undirected edges if the graph is undirected.
      For example, edges [1, 0] and [0, 1] are counted once and output as either [1, 0] or [0, 1].
      */
-    var undirectedEdges: [(src: Vertex, dest: Vertex)] {
+    var undirectedEdges: Set<Edge> {
         guard !self.isDirected else { return [] }
         
-        var edges = [(src: Vertex, dest: Vertex)]()
+        var edges = Set<Edge>()
         for vertex in self.adjacencyLists.keys {
-            for otherVertex in self.adjacencyLists[vertex]! {
-                edges.append((vertex, otherVertex))
-                adjacencyLists[otherVertex]!.remove(vertex)
+            for edge in self.adjacencyLists[vertex]! {
+                edges.insert(edge)
+                // Remove the counterpart in the adjacencyLists.
+                let reversed = Edge(edge.dest, edge.src, edge.weight)
+                adjacencyLists[edge.dest]!.remove(reversed)
             }
         }
         return edges
     }
-    
+    /**
+     Instantiation.
+     
+     - Parameter isDirected: Determine if the graph is directed or undirected.
+     */
     public init(isDirected: Bool = true) {
         self.isDirected = isDirected
-        adjacencyLists = [Vertex : Set<Vertex>]()
+        adjacencyLists = [Vertex : Set<Edge>]()
     }
-    
-    public func addEdge(from val1: Int, to val2: Int) {
-        let vertex1 = Vertex(val1)
-        let vertex2 = Vertex(val2)
+    /**
+     Add edge to the graph.
+     
+     - Parameter from:      The source/start of the edge.
+     - Parameter to:        The destination/end of the edge.
+     - Parameter weight:    The weight of the edge.
+     */
+    public func addEdge(from: Int, to: Int, weight: Int = 0) {
+        let vertex1 = Vertex(from)
+        let vertex2 = Vertex(to)
+        let edge = Edge(vertex1, vertex2, weight)
         
         if self.adjacencyLists[vertex1] == nil {
-            self.adjacencyLists[vertex1] = Set<Vertex>()
+            self.adjacencyLists[vertex1] = Set<Edge>()
         }
-        self.adjacencyLists[vertex1]!.insert(vertex2)
+        self.adjacencyLists[vertex1]!.insert(edge)
         
         if !self.isDirected {
+            let otherEdge = Edge(vertex2, vertex1, weight)
             if self.adjacencyLists[vertex2] == nil {
-                self.adjacencyLists[vertex2] = Set<Vertex>()
+                self.adjacencyLists[vertex2] = Set<Edge>()
             }
-            self.adjacencyLists[vertex2]!.insert(vertex1)
+            self.adjacencyLists[vertex2]!.insert(otherEdge)
         }
     }
     /**
@@ -53,14 +67,16 @@ class Graph {
      - Returns: A reversed graph of self.
      */
     public func getReversedGraph() -> Graph {
+        guard self.isDirected else { fatalError("Graph is reversible only when it is directed.") }
         let reversedGraph = Graph()
         for vertex in self.adjacencyLists.keys {
-            if let adjacencyList = self.adjacencyLists[vertex] {
-                for otherVertex in adjacencyList {
-                    if reversedGraph.adjacencyLists[otherVertex] == nil {
-                        reversedGraph.adjacencyLists[otherVertex] = Set<Vertex>()
+            if let edges = self.adjacencyLists[vertex] {
+                for edge in edges {
+                    if reversedGraph.adjacencyLists[edge.dest] == nil {
+                        reversedGraph.adjacencyLists[edge.dest] = Set<Edge>()
                     }
-                    reversedGraph.adjacencyLists[otherVertex]!.insert(vertex)
+                    let reversed = Edge(edge.dest, edge.src, edge.weight)
+                    reversedGraph.adjacencyLists[edge.dest]!.insert(reversed)
                 }
             }
         }
@@ -73,6 +89,7 @@ class Graph {
      - Returns: A dictionary with Vertex as keys and the in degree of the Vertex as values.
      */
     private func calculateInDegreeOfVertices() -> [Vertex : Int] {
+        guard self.isDirected else { fatalError("Only calculates in degree in directed graph.") }
         // Set the initial in degree of every vertex to be 0.
         var inDegrees = [Vertex: Int]()
         for vertex in self.adjacencyLists.keys {
@@ -80,9 +97,9 @@ class Graph {
         }
         // Calculate the in degree of each vertex in the graph.
         for vertex in self.adjacencyLists.keys {
-            if let adjacencyList = self.adjacencyLists[vertex] {
-                for otherVertex in adjacencyList {
-                    inDegrees[otherVertex] = (inDegrees[otherVertex] ?? 0) + 1
+            if let edges = self.adjacencyLists[vertex] {
+                for edge in edges {
+                    inDegrees[edge.dest] = (inDegrees[edge.dest] ?? 0) + 1
                 }
             }
         }
@@ -95,6 +112,7 @@ class Graph {
      - Returns: An array of vertices that are categorized as source vertices.
      */
     public func getSourceVertices() -> [Vertex] {
+        guard self.isDirected else { fatalError("Source vertices can only be found in directed graph.") }
         let sourceVertices = self.calculateInDegreeOfVertices().filter({ (_, indegree) -> Bool in
             return indegree == 0
         }).map { (vertex, _) -> Vertex in
@@ -109,6 +127,7 @@ class Graph {
      - Returns: An array of vertices that are categorized as sink vertices.
      */
     public func getSinkVertices() -> [Vertex] {
+        guard self.isDirected else { fatalError("Sink vertices can only be found in directed graph.") }
         // It might not be as easy to find sink vertices in the original graph. However, we can find sink vertices by using
         // the same algorithm on a reversed graph. A source vertex in a reversed graph is a sink vertex in the original one.
         let reversedGraph = self.getReversedGraph()
@@ -125,5 +144,21 @@ struct Vertex: Hashable {
     
     static func == (lhs: Vertex, rhs: Vertex) -> Bool {
         return lhs.val == rhs.val
+    }
+}
+
+struct Edge: Hashable {
+    var src: Vertex
+    var dest: Vertex
+    var weight: Int
+    
+    init(_ src: Vertex, _ dest: Vertex, _ weight: Int) {
+        self.src = src
+        self.dest = dest
+        self.weight = weight
+    }
+    
+    static func == (lhs: Edge, rhs: Edge) -> Bool {
+        return lhs.src == rhs.src && lhs.dest == rhs.dest && lhs.weight == rhs.weight
     }
 }
