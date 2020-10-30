@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		68182D73254CD4A80000C39D /* GR4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC2F4A254B79B500623738 /* GR4.swift */; };
 		682F8DD22547E0AC00C371FF /* GR2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682F8DD12547E0AC00C371FF /* GR2.swift */; };
 		688A331C2545057300F76C56 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A331B2545057300F76C56 /* main.swift */; };
 		688A33802546933100F76C56 /* GR1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A337F2546933100F76C56 /* GR1.swift */; };
@@ -236,6 +237,7 @@
 				688A33972546984C00F76C56 /* GraphTests.swift in Sources */,
 				68EC2E002549415200623738 /* GR2.swift in Sources */,
 				68EC2EA2254A8D8D00623738 /* GR3.swift in Sources */,
+				68182D73254CD4A80000C39D /* GR4.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,6 +11,7 @@ class GraphTests: XCTestCase {
     let gr1 = GR1()
     let gr2 = GR2()
     let gr3 = GR3()
+    let gr4 = GR4()
 
     // MARK: - DFS
     func testDFSTraverse() {
@@ -180,5 +181,31 @@ class GraphTests: XCTestCase {
         graph.addEdge(from: 5, to: 4, weight: 10)   // add edge 5-4
         let expected = 37
         XCTAssertEqual(expected, gr3.findMinimumSpanningTree(graph))
+    }
+    
+    // MARK: - PageRank
+    func testPageRank1() {
+        let webGraph = WebGraph()
+        webGraph.addEdge(from: 1, to: 2, weight: 1)    // add edge 1-2
+        webGraph.addEdge(from: 1, to: 3, weight: 1)    // add edge 1-3
+        webGraph.addEdge(from: 2, to: 3, weight: 1)    // add edge 2-3
+        webGraph.addEdge(from: 2, to: 4, weight: 1)    // add edge 2-4
+        webGraph.addEdge(from: 3, to: 4, weight: 1)    // add edge 3-4
+        webGraph.addEdge(from: 4, to: 1, weight: 1)    // add edge 4-1
+        webGraph.addEdge(from: 4, to: 2, weight: 1)    // add edge 4-2
+        webGraph.addEdge(from: 4, to: 3, weight: 1)    // add edge 4-3
+        let expectedRank = [4, 3, 2, 1]
+        XCTAssertEqual(expectedRank, gr4.performPageRank(webGraph))
+    }
+    
+    func testPageRank2() {
+        let webGraph = WebGraph()
+        webGraph.addEdge(from: 1, to: 2, weight: 1)    // add edge 1-2
+        webGraph.addEdge(from: 1, to: 3, weight: 1)    // add edge 1-3
+        webGraph.addEdge(from: 2, to: 3, weight: 1)    // add edge 2-3
+        webGraph.addEdge(from: 4, to: 3, weight: 1)    // add edge 4-3
+        webGraph.addEdge(from: 3, to: 1, weight: 1)    // add edge 3-1
+        let expectedRank = [3, 1, 2, 4]
+        XCTAssertEqual(expectedRank, gr4.performPageRank(webGraph))
     }
 }

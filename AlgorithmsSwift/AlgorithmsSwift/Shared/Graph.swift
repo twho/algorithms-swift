@@ -8,7 +8,7 @@
 class Graph {
     var isDirected = true
     // The adjacencyList does not have weight information stored.
-    var adjacencyLists: [Vertex : Set<Edge>]
+    open var adjacencyLists: [Vertex : Set<Edge>]
     /**
      Returns all the undirected edges if the graph is undirected.
      For example, edges [1, 0] and [0, 1] are counted once and output as either [1, 0] or [0, 1].
@@ -53,11 +53,13 @@ class Graph {
         }
         self.adjacencyLists[vertex1]!.insert(edge)
         
+        // Create a list for the other vertex so it appears in graph.
+        if self.adjacencyLists[vertex2] == nil {
+            self.adjacencyLists[vertex2] = Set<Edge>()
+        }
+        
         if !self.isDirected {
             let otherEdge = Edge(vertex2, vertex1, weight)
-            if self.adjacencyLists[vertex2] == nil {
-                self.adjacencyLists[vertex2] = Set<Edge>()
-            }
             self.adjacencyLists[vertex2]!.insert(otherEdge)
         }
     }
@@ -135,7 +137,7 @@ class Graph {
     }
 }
 
-struct Vertex: Hashable {
+class Vertex: Hashable {
     var val: Int
     
     init(_ val: Int) {
@@ -144,6 +146,10 @@ struct Vertex: Hashable {
     
     static func == (lhs: Vertex, rhs: Vertex) -> Bool {
         return lhs.val == rhs.val
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(self.val)
     }
 }
 
