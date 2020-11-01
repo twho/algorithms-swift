@@ -30,6 +30,23 @@ class GraphTests: XCTestCase {
         XCTAssertTrue(possibleDFSPaths.contains(gr1.dfs(graph)))
     }
     
+    // MARK: - BFS
+    func testBFSTraverse() {
+        let graph = Graph()
+        graph.addEdge(from: 0, to: 1)   // add edge 0-1
+        graph.addEdge(from: 0, to: 3)   // add edge 0-3
+        graph.addEdge(from: 0, to: 8)   // add edge 0-8
+        graph.addEdge(from: 1, to: 7)   // add edge 1-7
+        graph.addEdge(from: 2, to: 7)   // add edge 2-7
+        graph.addEdge(from: 3, to: 2)   // add edge 3-2
+        graph.addEdge(from: 2, to: 5)   // add edge 2-5
+        graph.addEdge(from: 3, to: 4)   // add edge 3-4
+        graph.addEdge(from: 4, to: 8)   // add edge 4-8
+        graph.addEdge(from: 5, to: 6)   // add edge 5-6
+        let expected = [0, 1, 3, 8, 7, 2, 4, 5, 6]
+        XCTAssertEqual(expected, gr1.bfs(graph))
+    }
+    
     // MARK: - Strongly Connected Components
     func testFindSCCs1() {
         let graph = Graph()

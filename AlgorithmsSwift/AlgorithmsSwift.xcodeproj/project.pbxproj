@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		68182D73254CD4A80000C39D /* GR4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC2F4A254B79B500623738 /* GR4.swift */; };
+		68182D78254CDDA80000C39D /* MF1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D77254CDDA80000C39D /* MF1.swift */; };
+		68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */; };
 		682F8DD22547E0AC00C371FF /* GR2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682F8DD12547E0AC00C371FF /* GR2.swift */; };
 		688A331C2545057300F76C56 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A331B2545057300F76C56 /* main.swift */; };
 		688A33802546933100F76C56 /* GR1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A337F2546933100F76C56 /* GR1.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		68182D77254CDDA80000C39D /* MF1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF1.swift; sourceTree = "<group>"; };
+		68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxFlowTests.swift; sourceTree = "<group>"; };
 		682F8DD12547E0AC00C371FF /* GR2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GR2.swift; sourceTree = "<group>"; };
 		688A33182545057200F76C56 /* AlgorithmsSwift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AlgorithmsSwift; sourceTree = BUILT_PRODUCTS_DIR; };
 		688A331B2545057300F76C56 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -65,6 +69,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		68182D76254CDD980000C39D /* MaxFlow */ = {
+			isa = PBXGroup;
+			children = (
+				68182D77254CDDA80000C39D /* MF1.swift */,
+			);
+			path = MaxFlow;
+			sourceTree = "<group>";
+		};
 		688A330F2545057200F76C56 = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +101,7 @@
 				688A33832546957400F76C56 /* Shared */,
 				688A337A25454F5500F76C56 /* Graph */,
 				688A337925454F3100F76C56 /* DynamicProgramming */,
+				68182D76254CDD980000C39D /* MaxFlow */,
 				688A331B2545057300F76C56 /* main.swift */,
 			);
 			path = AlgorithmsSwift;
@@ -98,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				688A33962546984C00F76C56 /* GraphTests.swift */,
+				68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */,
 				688A334F2545083300F76C56 /* AlgorithmsSwiftTests-Bridging-Header.h */,
 				688A335C2545094A00F76C56 /* Info.plist */,
 			);
@@ -221,6 +235,7 @@
 			files = (
 				688A33852546957D00F76C56 /* Graph.swift in Sources */,
 				688A33802546933100F76C56 /* GR1.swift in Sources */,
+				68182D78254CDDA80000C39D /* MF1.swift in Sources */,
 				688A331C2545057300F76C56 /* main.swift in Sources */,
 				682F8DD22547E0AC00C371FF /* GR2.swift in Sources */,
 				68EC2E042549DA1C00623738 /* GR3.swift in Sources */,
@@ -238,6 +253,7 @@
 				68EC2E002549415200623738 /* GR2.swift in Sources */,
 				68EC2EA2254A8D8D00623738 /* GR3.swift in Sources */,
 				68182D73254CD4A80000C39D /* GR4.swift in Sources */,
+				68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -47,6 +47,58 @@ class GR1 {
         output.append(vertex)
     }
     /**
+     The function traverses through the undirected graph using BFS method. Runtime: O(V + E), where V represents vertices and E represents edges.
+     
+     - Parameter graph: An undirected graph.
+     
+     - Returns: An integer array of BFS traverse result.
+     */
+    func bfs(_ graph: Graph) -> [Int] {
+        var visited = Set<Vertex>()
+        var queue = [Vertex]()
+        queue.append(graph.adjacencyLists.keys.sorted { $0.val < $1.val }[0])
+        
+        var output = queue
+        while queue.count > 0 {
+            let vertex = queue.removeFirst()
+            if let list = graph.adjacencyLists[vertex] {
+                // This sorting is not required in BFS, it is done for the test specifically
+                let edges = Array(list).sorted { $0.dest.val < $1.dest.val }
+                for edge in edges {
+                    let otherVertex = edge.dest
+                    if !visited.contains(otherVertex) {
+                        queue.append(otherVertex)
+                        visited.insert(otherVertex)
+                        output.append(otherVertex)
+                    }
+                }
+            }
+        }
+        
+        return output.map { (vertex) -> Int in
+            return vertex.val
+        }
+    }
+    /**
+     The function is used as the recursive method in BFS.
+     
+     - Parameter vertex:            The vertex to explore its relevant edges.
+     - Parameter adjacencyLists:    The adjacency lists used in the graph.
+     - Parameter visited:           The visisted vertices in the current traverse.
+     - Parameter output:            The pointer to the result of BFS traverse.
+     */
+    private func bfsHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Edge>], _ visited: inout Set<Vertex>, _ output: inout [Vertex]) {
+        visited.insert(vertex)
+        output.append(vertex)
+        if let adjacencyList = adjacencyLists[vertex] {
+            for edge in adjacencyList {
+                if !visited.contains(edge.dest) {
+                    bfsHelper(edge.dest, adjacencyLists, &visited, &output)
+                }
+            }
+        }
+    }
+    /**
      Find strongly connected componenets by DFS. SCC is defined as a group of components in a directed graph that have edges allow them to reach each other.
      It takes two rounds of DFS to find SCCs. Runtime: O(V + E)
      
