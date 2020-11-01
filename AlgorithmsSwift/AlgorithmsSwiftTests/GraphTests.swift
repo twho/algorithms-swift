@@ -168,6 +168,26 @@ class GraphTests: XCTestCase {
         XCTAssertFalse(gr3.isCycleExisting(graph))
     }
     
+    // MARK: - Bipartite
+    func testBipartite1() {
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 1)   // add edge 0-1
+        graph.addEdge(from: 0, to: 2)   // add edge 0-2
+        graph.addEdge(from: 0, to: 3)   // add edge 0-3
+        graph.addEdge(from: 1, to: 2)   // add edge 1-2
+        graph.addEdge(from: 2, to: 3)   // add edge 2-3
+        XCTAssertFalse(gr3.isBipartite(graph))
+    }
+    
+    func testBipartite2() {
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 1)   // add edge 0-1
+        graph.addEdge(from: 1, to: 2)   // add edge 1-2
+        graph.addEdge(from: 2, to: 3)   // add edge 2-3
+        graph.addEdge(from: 3, to: 0)   // add edge 3-0
+        XCTAssertTrue(gr3.isBipartite(graph))
+    }
+    
     // MARK: - Miniumum Spanning Tree (MST)
     func testMST1() {
         let graph = Graph(isDirected: false)

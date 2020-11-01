@@ -55,6 +55,39 @@ class GR3 {
         }
     }
     /**
+     A graph is bipartite if we can split its set of vertices into two independent subsets A and B, such that every edge connects vertex from
+     A to B or vice versa. If there is any edge connecting vertices internally in a subset, then the graph is not bipartite.
+     
+     - Parameter graph: An undirected graph.
+     
+     - Returns: A boolean indicates if the graph is bipartite.
+     */
+    func isBipartite(_ graph: Graph) -> Bool {
+        guard !graph.isDirected else {
+            fatalError("we cannot use union-find to detect cycles in a directed graphs")
+        }
+        
+        var parents = [Vertex : Vertex]()
+        var rank = [Vertex : Int]()
+        for vertex in graph.adjacencyLists.keys {
+            let list = Array(graph.adjacencyLists[vertex]!)
+            for idx in 0..<list.count {
+                let sourceParent = find(&parents, &rank, vertex)
+                let destParent = find(&parents, &rank, list[idx].dest)
+                if sourceParent == destParent {
+                    return false
+                }
+                
+                // All other vertices connected to the current should be unioned in the other subset.
+                if idx > 0 {
+                    union(&parents, &rank, list[idx - 1].dest, list[idx].dest)
+                }
+            }
+        }
+        
+        return true
+    }
+    /**
      Utility function used to union two vertices. Union by rank applied.
      
      - Parameter parents:   A dictionary that maps parents and children vertices.
