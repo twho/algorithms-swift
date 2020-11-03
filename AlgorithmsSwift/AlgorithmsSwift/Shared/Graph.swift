@@ -135,6 +135,17 @@ class Graph {
         let reversedGraph = self.getReversedGraph()
         return reversedGraph.getSourceVertices()
     }
+    /**
+     Utility function to format a key for the weight dicionary.
+     
+     - Parameter src:   The source vertex of the edge.
+     - Parameter dest:  The destination vertex of the edge.
+     
+     - Returns: A string in the format of "src.val, dest.val".
+     */
+    public static func getKey(_ src: Vertex, _ dest: Vertex) -> String {
+        return "\(src.val), \(dest.val)"
+    }
 }
 
 class Vertex: Hashable {

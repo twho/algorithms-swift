@@ -15,13 +15,13 @@ class MF1 {
      - Parameter start: The start point of the flow.
      - Parameter end:   The end point of the flow.
      
-     - Returns: An integer indicates the maximum flow.
+     - Returns: An integer indicates the maximum flow and a weight dictionary represents a graph.
      */
-    func maximumFlowByFordFulkerson(_ graph: Graph, _ start: Int, _ end: Int) -> Int {
+    func maximumFlowByFordFulkerson(_ graph: Graph, _ start: Int, _ end: Int) -> (maxFlow: Int, residualGraph: [String : Int]) {
         // The parents dictionary for quick reference to the parent of the vertex.
         var parents = [Vertex : Vertex]()
         // The residual graph in the format of weight dictionary.
-        var rGraph = constructWeightDictionary(graph)
+        var rGraph = buildtWeightDictionary(graph)
         var maxFlow = 0
         let vertices = Array(graph.adjacencyLists.keys)
         while bfs(vertices, rGraph, Vertex(start), Vertex(end), &parents) {
@@ -29,8 +29,9 @@ class MF1 {
             var vertex = Vertex(end)
             while vertex != Vertex(start) {
                 let source = parents[vertex]!
-                if rGraph[getKey(source, vertex)] != nil {
-                    pathFlow = min(rGraph[getKey(source, vertex)]!, pathFlow)
+                let sourceKey = Graph.getKey(source, vertex)
+                if rGraph[sourceKey] != nil {
+                    pathFlow = min(rGraph[sourceKey]!, pathFlow)
                 }
                 // Track back the path.
                 vertex = parents[vertex]!
@@ -40,23 +41,25 @@ class MF1 {
             while vertex != Vertex(start) {
                 let source = parents[vertex]!
                 // Update residual capacities of the edges.
-                if rGraph[getKey(source, vertex)] == nil {
-                    rGraph[getKey(source, vertex)] = 0
+                let sourceKey = Graph.getKey(source, vertex)
+                if rGraph[sourceKey] == nil {
+                    rGraph[sourceKey] = 0
                 }
-                rGraph[getKey(source, vertex)]! -= pathFlow
+                rGraph[sourceKey]! -= pathFlow
                 
                 // Update residual capacities of the reverse edges.
-                if rGraph[getKey(vertex, source)] == nil {
-                    rGraph[getKey(vertex, source)] = 0
+                let destinationKey = Graph.getKey(vertex, source)
+                if rGraph[destinationKey] == nil {
+                    rGraph[destinationKey] = 0
                 }
-                rGraph[getKey(vertex, source)]! += pathFlow
+                rGraph[destinationKey]! += pathFlow
                 
                 // Track back the path.
                 vertex = parents[vertex]!
             }
             maxFlow += pathFlow
         }
-        return maxFlow
+        return (maxFlow, rGraph)
     }
     /**
      Utility function that utilizes BFS to find path from start to end.
@@ -75,7 +78,7 @@ class MF1 {
         while !queue.isEmpty {
             let vertex = queue.removeFirst()
             for otherVertex in vertices {
-                if !visited.contains(otherVertex), let weight = residualGraph[getKey(vertex, otherVertex)], weight > 0 {
+                if !visited.contains(otherVertex), let weight = residualGraph[Graph.getKey(vertex, otherVertex)], weight > 0 {
                     queue.append(otherVertex)
                     visited.insert(otherVertex)
                     parents[otherVertex] = vertex
@@ -86,32 +89,21 @@ class MF1 {
         return visited.contains(end)
     }
     /**
-     Utility function to construct weight dictionary for quick reference.
+     Utility function to build weight dictionary for quick reference.
      
      - Parameter graph: A residual graph of the original input graph.
      
      - Returns: A dicionary with the key in a string form of "src.val, dest.val" and the value is the weight of the edge.
      */
-    private func constructWeightDictionary(_ graph: Graph) -> [String : Int] {
+    private func buildtWeightDictionary(_ graph: Graph) -> [String : Int] {
         var dict = [String : Int]()
         for vertex in graph.adjacencyLists.keys {
             if let edges = graph.adjacencyLists[vertex] {
                 for edge in edges {
-                    dict[getKey(edge.src, edge.dest)] = edge.weight
+                    dict[Graph.getKey(edge.src, edge.dest)] = edge.weight
                 }
             }
         }
         return dict
-    }
-    /**
-     Utility function to format a key for the weight dicionary.
-     
-     - Parameter src:   The source vertex of the edge.
-     - Parameter dest:  The destination vertex of the edge.
-     
-     - Returns: A string in the format of "src.val, dest.val".
-     */
-    private func getKey(_ src: Vertex, _ dest: Vertex) -> String {
-        return "\(src.val), \(dest.val)"
     }
 }
