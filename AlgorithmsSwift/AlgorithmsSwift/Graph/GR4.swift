@@ -40,7 +40,6 @@ class GR4 {
                     }
                 }
                 webpage.rank =  (1 - damping) / webCount + damping * inbound
-                print(webpage.val, webpage.rank)
             }
         }
         return webAdjacencyLists.keys.sorted { $0.rank > $1.rank }.map { (webpage) -> Int in
