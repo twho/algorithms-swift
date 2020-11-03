@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		680F03922550D2BA00D187FF /* MF1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D77254CDDA80000C39D /* MF1.swift */; };
 		68182D73254CD4A80000C39D /* GR4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC2F4A254B79B500623738 /* GR4.swift */; };
 		68182D78254CDDA80000C39D /* MF1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D77254CDDA80000C39D /* MF1.swift */; };
 		68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */; };
@@ -247,6 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				680F03922550D2BA00D187FF /* MF1.swift in Sources */,
 				688A33A72546990000F76C56 /* Graph.swift in Sources */,
 				688A339C2546986F00F76C56 /* GR1.swift in Sources */,
 				688A33972546984C00F76C56 /* GraphTests.swift in Sources */,
