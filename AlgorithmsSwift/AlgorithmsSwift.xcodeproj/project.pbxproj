@@ -10,6 +10,8 @@
 		680F03922550D2BA00D187FF /* MF1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D77254CDDA80000C39D /* MF1.swift */; };
 		680F03962551306400D187FF /* MF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F03952551306400D187FF /* MF2.swift */; };
 		680F03992551306600D187FF /* MF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F03952551306400D187FF /* MF2.swift */; };
+		680F039F25521CAA00D187FF /* MF3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F039E25521CAA00D187FF /* MF3.swift */; };
+		680F03A225521D4100D187FF /* MF3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F039E25521CAA00D187FF /* MF3.swift */; };
 		68182D73254CD4A80000C39D /* GR4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC2F4A254B79B500623738 /* GR4.swift */; };
 		68182D78254CDDA80000C39D /* MF1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D77254CDDA80000C39D /* MF1.swift */; };
 		68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */; };
@@ -40,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		680F03952551306400D187FF /* MF2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF2.swift; sourceTree = "<group>"; };
+		680F039E25521CAA00D187FF /* MF3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF3.swift; sourceTree = "<group>"; };
 		68182D77254CDDA80000C39D /* MF1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF1.swift; sourceTree = "<group>"; };
 		68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxFlowTests.swift; sourceTree = "<group>"; };
 		682F8DD12547E0AC00C371FF /* GR2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GR2.swift; sourceTree = "<group>"; };
@@ -78,6 +81,7 @@
 			children = (
 				68182D77254CDDA80000C39D /* MF1.swift */,
 				680F03952551306400D187FF /* MF2.swift */,
+				680F039E25521CAA00D187FF /* MF3.swift */,
 			);
 			path = MaxFlow;
 			sourceTree = "<group>";
@@ -243,6 +247,7 @@
 				688A33802546933100F76C56 /* GR1.swift in Sources */,
 				68182D78254CDDA80000C39D /* MF1.swift in Sources */,
 				688A331C2545057300F76C56 /* main.swift in Sources */,
+				680F039F25521CAA00D187FF /* MF3.swift in Sources */,
 				682F8DD22547E0AC00C371FF /* GR2.swift in Sources */,
 				68EC2E042549DA1C00623738 /* GR3.swift in Sources */,
 				68EC2F4B254B79B500623738 /* GR4.swift in Sources */,
@@ -259,6 +264,7 @@
 				688A33972546984C00F76C56 /* GraphTests.swift in Sources */,
 				68EC2E002549415200623738 /* GR2.swift in Sources */,
 				680F03992551306600D187FF /* MF2.swift in Sources */,
+				680F03A225521D4100D187FF /* MF3.swift in Sources */,
 				68EC2EA2254A8D8D00623738 /* GR3.swift in Sources */,
 				68182D73254CD4A80000C39D /* GR4.swift in Sources */,
 				68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */,
