@@ -20,6 +20,7 @@ class MF3 {
      After the graph conversion is done, we can use the method in max flow min cut algorithm in MF2 to find the min cut
      in the graph. Those edges will be used to cut the foreground image from its background.
      
+     Reference: http://www.cs.ucf.edu/~bagci/teaching/computervision16/Lec13.pdf
      P.S. I haven't found an illustrative example for this algorithm, please feel free to contribute.
      */
     func imageSegmentation(_ image: [[Int]]) -> Set<[Int]> {
