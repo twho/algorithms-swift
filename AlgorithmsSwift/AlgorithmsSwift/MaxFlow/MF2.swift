@@ -6,10 +6,10 @@
 //
 
 class MF2 {
-    let mf1 = MF1()
+    let mf4 = MF4()
     /**
      Max-flow Min st-cut Theorem: size of max flow = min capacity of a s-t cut. Base on the theory, the function
-     utiliizes Ford-Fulkerson method to find max flow then uses its residual graph to find minimum s-t cut.
+     utiliizes Edmonds-Karp method to find max flow then uses its residual graph to find minimum s-t cut.
      
      - Parameter graph: An directed graph.
      - Parameter start: The start point of the flow.
@@ -18,7 +18,8 @@ class MF2 {
      - Returns: A set of integer array that represents the edges in minimum s-t cut.
      */
     func minimumCut(_ graph: Graph, _ start: Int, _ end: Int) -> Set<[Int]> {
-        let rGraph = buildGraphFromWeightDictionary(mf1.maximumFlowByFordFulkerson(graph, start, end).residualGraph)
+        // Use Edmonds-Karp method since it is guranteed to find shortest path and to terminate.
+        let rGraph = buildGraphFromWeightDictionary(mf4.maximumFlowByEdmondsKarp(graph, start, end).residualGraph)
         var visited = Set<Vertex>()
         // Start DFS traverse from the starting vertex.
         dfsHelper(Vertex(start), rGraph.adjacencyLists, &visited)
@@ -62,7 +63,7 @@ class MF2 {
     private func buildGraphFromWeightDictionary(_ weightDict: [String : Int]) -> Graph {
         let graph = Graph()
         for key in weightDict.keys {
-            let keyArr = key.components(separatedBy: ", ")
+            let keyArr = key.components(separatedBy: ",")
             let source = Int(keyArr[0])!
             let destination = Int(keyArr[1])!
             let weight = weightDict[key]!

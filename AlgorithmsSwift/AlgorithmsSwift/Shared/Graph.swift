@@ -144,7 +144,25 @@ class Graph {
      - Returns: A string in the format of "src.val, dest.val".
      */
     public static func getKey(_ src: Vertex, _ dest: Vertex) -> String {
-        return "\(src.val), \(dest.val)"
+        return "\(src.val),\(dest.val)"
+    }
+    /**
+     Utility function to build weight dictionary for quick reference.
+     
+     - Parameter graph: A residual graph of the original input graph.
+     
+     - Returns: A dicionary with the key in a string form of "src.val, dest.val" and the value is the weight of the edge.
+     */
+    public func buildtWeightDictionary() -> [String : Int] {
+        var dict = [String : Int]()
+        for vertex in self.adjacencyLists.keys {
+            if let edges = self.adjacencyLists[vertex] {
+                for edge in edges {
+                    dict[Graph.getKey(edge.src, edge.dest)] = edge.weight
+                }
+            }
+        }
+        return dict
     }
 }
 

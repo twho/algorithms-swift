@@ -80,25 +80,6 @@ class GR1 {
         }
     }
     /**
-     The function is used as the recursive method in BFS.
-     
-     - Parameter vertex:            The vertex to explore its relevant edges.
-     - Parameter adjacencyLists:    The adjacency lists used in the graph.
-     - Parameter visited:           The visisted vertices in the current traverse.
-     - Parameter output:            The pointer to the result of BFS traverse.
-     */
-    private func bfsHelper(_ vertex: Vertex, _ adjacencyLists: [Vertex : Set<Edge>], _ visited: inout Set<Vertex>, _ output: inout [Vertex]) {
-        visited.insert(vertex)
-        output.append(vertex)
-        if let adjacencyList = adjacencyLists[vertex] {
-            for edge in adjacencyList {
-                if !visited.contains(edge.dest) {
-                    bfsHelper(edge.dest, adjacencyLists, &visited, &output)
-                }
-            }
-        }
-    }
-    /**
      Find strongly connected componenets by DFS. SCC is defined as a group of components in a directed graph that have edges allow them to reach each other.
      It takes two rounds of DFS to find SCCs. Runtime: O(V + E)
      
