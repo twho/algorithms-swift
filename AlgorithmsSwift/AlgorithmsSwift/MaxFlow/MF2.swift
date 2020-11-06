@@ -19,7 +19,7 @@ class MF2 {
      */
     func minimumCut(_ graph: Graph, _ start: Int, _ end: Int) -> Set<[Int]> {
         // Use Edmonds-Karp method since it is guranteed to find shortest path and to terminate.
-        let rGraph = buildGraphFromWeightDictionary(mf4.maximumFlowByEdmondsKarp(graph, start, end).residualGraph)
+        let rGraph = Graph.buildGraphFromWeightDictionary(mf4.maximumFlowByEdmondsKarp(graph, start, end).residualGraph)
         var visited = Set<Vertex>()
         // Start DFS traverse from the starting vertex.
         dfsHelper(Vertex(start), rGraph.adjacencyLists, &visited)
@@ -52,23 +52,5 @@ class MF2 {
                 }
             }
         }
-    }
-    /**
-     Build a graph based on the weight dictionary.
-     
-     - Parameter weightDict: A weight dictionary in the form of ["src.val, dest.val" : weight].
-     
-     - Returns: A graph in its normal form.
-     */
-    private func buildGraphFromWeightDictionary(_ weightDict: [String : Int]) -> Graph {
-        let graph = Graph()
-        for key in weightDict.keys {
-            let keyArr = key.components(separatedBy: ",")
-            let source = Int(keyArr[0])!
-            let destination = Int(keyArr[1])!
-            let weight = weightDict[key]!
-            graph.addEdge(from: source, to: destination, weight: weight)
-        }
-        return graph
     }
 }

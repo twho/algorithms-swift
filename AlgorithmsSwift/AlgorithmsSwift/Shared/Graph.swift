@@ -164,6 +164,24 @@ class Graph {
         }
         return dict
     }
+    /**
+     Build a graph based on the weight dictionary.
+     
+     - Parameter weightDict: A weight dictionary in the form of ["src.val, dest.val" : weight].
+     
+     - Returns: A graph in its normal form.
+     */
+    public static func buildGraphFromWeightDictionary(_ weightDict: [String : Int]) -> Graph {
+        let graph = Graph()
+        for key in weightDict.keys {
+            let keyArr = key.components(separatedBy: ",")
+            let source = Int(keyArr[0])!
+            let destination = Int(keyArr[1])!
+            let weight = weightDict[key]!
+            graph.addEdge(from: source, to: destination, weight: weight)
+        }
+        return graph
+    }
 }
 
 class Vertex: Hashable {
