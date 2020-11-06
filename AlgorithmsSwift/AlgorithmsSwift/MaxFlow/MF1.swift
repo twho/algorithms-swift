@@ -38,7 +38,10 @@ class MF1 {
         guard start != end else { return currentFlow }
         visited.insert(start)
         if let edges = adjacencyLists[start] {
-            for edge in edges {
+            // Shuffling is required by the tests but not the implementation itself. We need to
+            // huffle to get different results since the algorithm does not guarantee good results.
+            let shuffledEdges = edges.shuffled()
+            for edge in shuffledEdges {
                 let sourceKey = Graph.getKey(edge.src, edge.dest)
                 if !visited.contains(edge.dest), let weight = rGraph[sourceKey], weight > 0 {
                     let flow = min(currentFlow, weight)
