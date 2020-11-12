@@ -7,160 +7,289 @@
 
 class LP1 {
     /**
-     Solve basic 3D linear programming example using Simplex algorithm.
-     Find maximum of equation: x1 + 6*x2 + 10*x3
-     Conditions:
-        1. x1 less than 300
-        2. x2 less than 200
-        3. x1 + 3*x2 + 2*x3 less than 1000. (cost)
-        4. x2 + 3*x3 less than 500. (packaging)
-        5. x1, x2, x3 are all greater than or equal to 0.
-     Referring to: https://people.richland.edu/james/ictcm/2006/simplex.html, convert to a table.
-     
-       x1  x2  x3  s1  s2  s3  s4  s5  s6  s7
-     [ 1,  0,  0,  1,  0,  0,  0,  0,  0,  0,  300]
-     [ 0,  1,  0,  0,  1,  0,  0,  0,  0,  0,  200]
-     [ 1,  3,  2,  0,  0,  1,  0,  0,  0,  0, 1000]
-     [ 0,  1,  3,  0,  0,  0,  1,  0,  0,  0,  500]
-     [ 1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0]
-     [ 0,  1,  0,  0,  0,  0,  0,  0,  1,  0,  0]
-     [ 0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  0]
-     
-     [-1, -6, -10, 0,  0,  0,  0,  0,  0,  0,  0]
-        
-     - Parameter products:
-     https://github.com/kennyledet/Algorithm-Implementations/blob/master/Simplex_Method/Java/mike168m/Simplex.java
+     Solve 3D linear programming example using Simplex algorithm.
+     Reference: https://github.com/VladimirDinic/WDSimplexMethod
      */
-    var rows = 0
-    var columns = 0
-    var table = [[Double]]()
-    var count = 0
-    func loadData(_ data: [[Double]], _ numOfConstraints: Int, _ numOfUnknowns: Int) {
-        guard data.count > 0 else { return }
-        rows = numOfConstraints + 1
-        columns = numOfUnknowns + 1
+    class SimplexMethod {
+        private var iteration = 0
+        private var z0 = SimplexValue()
+        var valueTarget: Target
+        var numberOfCorrections = 0
+        var mainEquation: SimplexEquation
+        var constraintEquations: [SimplexEquation]
+        var xMatrix = SimplexMatrix()
+        var zcValues = [SimplexValue]()
+        var bVectorSpaceBaseIndex = [Int]()
+        var xVectorSpaceBaseIndex = [Int]()
+        var x0Vector = SimplexVector()
+        var cVector: SimplexVector?
+        var c0Vector = SimplexVector()
+        var a0Vector: SimplexVector?
+        var aVectors = [SimplexVector]()
+        var bMatrix = SimplexMatrix()
+        var solution: SimplexSolution?
+        var extendedSystemOfEquationsSize = 0
+        var systemOfEquationsSize = 0
         
-        table = Array(repeating: Array(repeating: 0.0, count: columns), count: rows)
-        for i in 0..<table.count {
-            table[i] = data[i]
-        }
-    }
-    
-    func findMaxProfit() -> [[Double]] {
-        let pivotColumn = findEnteringColumn(table)
-        
-        var unbounded = false
-        let ratios = calculateRatios(table, pivotColumn, &unbounded)
-        if unbounded {
-            return []
-        }
-        let prev = table
-        let pivotRow = ratios.firstIndex(of: ratios.min()!)! // Find the smallest value
-        formNextTableau(&table, pivotRow, pivotColumn)
-        
-        print(prev == table)
-        print(table.last!.last!)
-        return table
-    }
-    
-    private func formNextTableau(_ table: inout [[Double]], _ pivotColumn: Int, _ pivotRow: Int) {
-        let pivotValue = table[pivotRow][pivotColumn]
-        var pivotRowVals = Array(repeating: 0.0, count: columns)
-        var pivotColumnVals = Array(repeating: 0.0, count: columns)
-        var rowNew = Array(repeating: 0.0, count: columns)
-
-        // divide all entries in pivot row by entry inpivot column
-        // get entry in pivot row
-        pivotRowVals = table[pivotRow]
-                
-        // get entry inpivot colum
-        for i in 0..<rows {
-            pivotColumnVals[i] = table[i][pivotColumn]
-        }
-                
-        // divide values in pivot row by pivot value
-        for i in 0..<columns {
-            rowNew[i] = pivotRowVals[i] / pivotValue
+        init(mainEquation: SimplexEquation, constraintEquations: [SimplexEquation], valueTarget: Target) {
+            self.mainEquation = mainEquation
+            self.constraintEquations = constraintEquations
+            self.valueTarget = valueTarget
+            self.generateVectors()
         }
         
-        // subtract from each of the other rows
-        for i in 0..<rows {
-            if i != pivotRow {
-                for j in 0..<columns {
-                    let c = pivotColumnVals[i]
-                    table[i][j] = table[i][j] - (c * rowNew[j])
+        func nextIteration() {
+            iteration += 1
+            if iteration == 1 {
+                generateBMatrix()
+                bVectorSpaceBaseIndex.removeAll()
+                for i in 0...self.constraintEquations.count - 1 {
+                    bVectorSpaceBaseIndex.append(self.extendedSystemOfEquationsSize-self.constraintEquations.count+i+1)
                 }
-            }
-        }
-                
-        // replace the row
-        table[pivotRow] = rowNew
-    }
-    
-    private func findEnteringColumn(_ table: [[Double]]) -> Int {
-        guard table.count > 0 else { return 0 }
-        // Set inital state
-        var values = Array(repeating: 0.0, count: columns)
-        var location = 0, count = 0
-        // Find column
-        for pos in 0..<columns - 1 {
-            if table[rows - 1][pos] < 0 {
-                count += 1
-            }
-        }
-        
-        if count > 1 {
-            for pos in 0..<columns - 1 {
-                values[pos] = abs(table[rows - 1][pos])
-            }
-            // Find the index of the largest value
-            location = values.firstIndex(of: values.max()!)!
-        } else {
-            location = count - 1
-        }
-        return location
-    }
-    
-    // calculates the pivot row ratios
-    private func calculateRatios(_ table: [[Double]], _ currentColumn: Int, _ isUnbounded: inout Bool) -> [Double] {
-        guard table.count > 0 else { return [] }
-        var positiveEntries = Array(repeating: 0.0, count: rows)
-        var res = Array(repeating: 0.0, count: rows)
-        var allNegativeCount = 0
-        for i in 0..<rows {
-            if table[i][currentColumn] > 0 {
-                positiveEntries[i] = table[i][currentColumn]
+                if let cVector = self.cVector {
+                    c0Vector = SimplexVector()
+                    for singleIndex in bVectorSpaceBaseIndex {
+                        c0Vector.vectorNumbers.append(cVector.vectorNumbers[singleIndex-1])
+                    }
+                }
+                let bInverse = self.bMatrix.transposeMatrix().inverseMatrix()
+                if let a0Vector = a0Vector {
+                    x0Vector = bInverse * a0Vector
+                }
+                for i in 0...aVectors.count - 1 {
+                    if !bVectorSpaceBaseIndex.contains(i + 1) {
+                        xMatrix.vectors.append(bInverse.transposeMatrix() * aVectors[i])
+                        xVectorSpaceBaseIndex.append(i + 1)
+                    }
+                }
             } else {
-                positiveEntries[i] = 0
-                allNegativeCount += 1
+                for i in 0...bVectorSpaceBaseIndex.count - 1 {
+                    if self.bVectorSpaceBaseIndex[i] == solution!.outVectorIndex {
+                        self.bVectorSpaceBaseIndex[i] = solution!.inVectorIndex
+                    }
+                }
+                generateBMatrix()
+                for i in 0...xVectorSpaceBaseIndex.count - 1 {
+                    if self.xVectorSpaceBaseIndex[i] == solution!.inVectorIndex
+                    {
+                        self.xVectorSpaceBaseIndex[i] = solution!.outVectorIndex
+                    }
+                }
+                let bInverse = self.bMatrix.transposeMatrix().inverseMatrix()
+                if let a0Vector = a0Vector {
+                    x0Vector = bInverse * a0Vector
+                }
+                xMatrix.vectors.removeAll()
+                for singleIndex in xVectorSpaceBaseIndex {
+                    xMatrix.vectors.append(bInverse * aVectors[singleIndex - 1])
+                }
+                if let cVector = self.cVector {
+                    c0Vector = SimplexVector()
+                    for singleIndex in bVectorSpaceBaseIndex {
+                        c0Vector.vectorNumbers.append(cVector.vectorNumbers[singleIndex - 1])
+                    }
+                }
             }
+            
+            z0 = SimplexValue()
+            for i in 0...c0Vector.vectorNumbers.count - 1 {
+                z0 += c0Vector.vectorNumbers[i] * x0Vector.vectorNumbers[i]
+            }
+            
+            zcValues.removeAll()
+            for xIndex in xVectorSpaceBaseIndex {
+                let index = xVectorSpaceBaseIndex.firstIndex(of: xIndex)!
+                zcValues.append(c0Vector * xMatrix.vectors[index] - (cVector?.vectorNumbers[xIndex-1])!)
+            }
+            
+            self.solution = SimplexSolution(equationTarget: valueTarget, zcVector: SimplexVector(vectorNumbers: zcValues), bVectorIndexes: bVectorSpaceBaseIndex,
+                                            xMatrix: xMatrix, x0Vector: x0Vector, xVectorIndexes: xVectorSpaceBaseIndex, optimumSolution: z0)
         }
         
-        if allNegativeCount == rows {
-            isUnbounded = true
-        } else {
-            for i in 0..<rows {
-                let val = positiveEntries[i]
-                if val > 0 {
-                    res[i] = table[i][columns - 1] / val
+        func generateVectors() {
+            // Calculate the system of equations size.
+            for i in 0...self.constraintEquations.count - 1 {
+                systemOfEquationsSize = max(self.constraintEquations[i].equationNumbers.count, systemOfEquationsSize)
+            }
+            calculateExtendedSystemOfEquationsSize()
+            generateCVector()
+            generateAVectors()
+            generateA0Vector()
+        }
+        
+        func generateBMatrix() {
+            if iteration <= 1 {
+                for i in self.extendedSystemOfEquationsSize - self.constraintEquations.count...self.extendedSystemOfEquationsSize - 1 {
+                    self.bMatrix.vectors.append(self.aVectors[i])
+                }
+            } else {
+                self.bMatrix.vectors.removeAll()
+                for singleBaseIndex in self.bVectorSpaceBaseIndex {
+                    self.bMatrix.vectors.append(self.aVectors[singleBaseIndex-1])
                 }
             }
         }
         
-        return res
+        func calculateSystemOfEquationsSize() {
+            for i in 0...self.constraintEquations.count - 1 {
+                systemOfEquationsSize = max(self.constraintEquations[i].equationNumbers.count, systemOfEquationsSize)
+            }
+        }
+        
+        func calculateExtendedSystemOfEquationsSize() {
+            extendedSystemOfEquationsSize = systemOfEquationsSize + self.constraintEquations.count
+            for singleEquation in self.constraintEquations {
+                if singleEquation.equality == Relation.greaterOrEqual {
+                    numberOfCorrections += 1
+                    extendedSystemOfEquationsSize += 1
+                }
+            }
+        }
+        
+        func generateCVector() {
+            self.cVector = SimplexVector(vectorNumbers: self.mainEquation.equationNumbers)
+            if (self.cVector != nil) {
+                if self.numberOfCorrections > 0 {
+                    for _ in 1...self.numberOfCorrections {
+                        self.cVector?.vectorNumbers.append(SimplexValue())
+                    }
+                }
+                for _ in self.systemOfEquationsSize...self.extendedSystemOfEquationsSize-1-self.numberOfCorrections {
+                    self.cVector?.vectorNumbers.append(SimplexValue())
+                }
+                for i in self.systemOfEquationsSize+numberOfCorrections...self.extendedSystemOfEquationsSize - 1 {
+                    let singleEquation = self.constraintEquations[i - (self.systemOfEquationsSize+numberOfCorrections)]
+                    if singleEquation.equality != Relation.lessOrEqual {
+                        self.cVector?.vectorNumbers[i] = self.valueTarget == .max ? SimplexValue(mValue: -1) : SimplexValue(mValue: 1)
+                    }
+                }
+            }
+        }
+        
+        func generateA0Vector() {
+            self.a0Vector = SimplexVector()
+            for singleEquation in self.constraintEquations {
+                if let equationSolution = singleEquation.equationSolution {
+                    self.a0Vector?.vectorNumbers.append(equationSolution)
+                }
+            }
+        }
+        
+        func generateAVectors() {
+            for _ in 1...systemOfEquationsSize {
+                self.aVectors.append(SimplexVector())
+            }
+            for i in 0...self.constraintEquations.count - 1 {
+                for j in 0...self.aVectors.count - 1 {
+                    self.aVectors[j].vectorNumbers.append(self.constraintEquations[i].equationNumbers[j])
+                }
+            }
+            for i in 0...self.constraintEquations.count - 1 {
+                var vectorNumbers = [SimplexValue]()
+                for _ in 0...self.constraintEquations.count - 1 {
+                    vectorNumbers.append(SimplexValue())
+                }
+                let singleEquation = self.constraintEquations[i]
+                if singleEquation.equality == Relation.greaterOrEqual {
+                    vectorNumbers[i] = SimplexValue(realValue: -1, mValue: 0)
+                    self.aVectors.append(SimplexVector(vectorNumbers: vectorNumbers))
+                }
+            }
+            for i in 0...self.constraintEquations.count - 1 {
+                var vectorNumbers = [SimplexValue]()
+                for _ in 0...self.constraintEquations.count - 1 {
+                    vectorNumbers.append(SimplexValue())
+                }
+                vectorNumbers[i] = SimplexValue(realValue: 1, mValue: 0)
+                self.aVectors.append(SimplexVector(vectorNumbers: vectorNumbers))
+            }
+        }
     }
-}
-
-struct SampleProduct {
-    var profit: Int
-    var demand: Int
-    var supply: Int
-    var packaging: Int
     
-    init(_ profit: Int, _ demand: Int, _ supply: Int, _ packaging: Int) {
-        self.profit = profit
-        self.demand = demand
-        self.supply = supply
-        self.packaging = packaging
+    class SimplexSolution {
+        var target: Target
+        var zcVector: SimplexVector
+        var optimumSolution: SimplexValue
+        var xVectorIndexes: [Int]
+        var bVectorIndexes: [Int]
+        var x0Vector: SimplexVector
+        var xMatrix: SimplexMatrix
+        var inVectorIndex = 0
+        var outVectorIndex = 0
+        var solutionFound = false
+        
+        init(equationTarget: Target, zcVector: SimplexVector, bVectorIndexes: [Int], xMatrix: SimplexMatrix, x0Vector: SimplexVector, xVectorIndexes: [Int], optimumSolution: SimplexValue) {
+            self.target = equationTarget
+            self.zcVector = zcVector
+            self.xVectorIndexes = xVectorIndexes
+            self.optimumSolution = optimumSolution
+            self.bVectorIndexes = bVectorIndexes
+            self.x0Vector = x0Vector
+            self.xMatrix = xMatrix
+            self.checkIfSolutionIsFound()
+            if !solutionFound {
+                self.calculateInVectorIndex()
+                self.calculateOutVectorIndex()
+            }
+        }
+        
+        func checkIfSolutionIsFound() {
+            solutionFound = true
+            for singleValue in zcVector.vectorNumbers {
+                switch target {
+                case .max:
+                    if singleValue.mValue < 0 || (singleValue.mValue == 0 && singleValue.realValue < 0) {
+                        solutionFound = false
+                    }
+                case .min:
+                    if singleValue.mValue > 0 || (singleValue.mValue == 0 && singleValue.realValue > 0) {
+                        solutionFound = false
+                    }
+                }
+            }
+        }
+        
+        func calculateInVectorIndex() {
+            inVectorIndex = xVectorIndexes[0]
+            var inVectorPositionIndex = 0
+            for i in 1...zcVector.vectorNumbers.count - 1 {
+                switch target {
+                case .max:
+                    let cond1 = zcVector.vectorNumbers[i] < 0
+                    let number1 = zcVector.vectorNumbers[i].abs()
+                    let number2 = zcVector.vectorNumbers[inVectorPositionIndex].abs()
+                    let cond2 = number1 > number2
+                    let cond3 = zcVector.vectorNumbers[inVectorPositionIndex] > 0
+                    if cond1 && (cond3 || cond2) {
+                        inVectorPositionIndex = i
+                    }
+                case .min:
+                    for i in 1...zcVector.vectorNumbers.count - 1 {
+                        let cond1 = zcVector.vectorNumbers[i] > 0
+                        let cond2 = zcVector.vectorNumbers[i].abs() >= zcVector.vectorNumbers[inVectorPositionIndex].abs()
+                        if cond1 && cond2
+                        {
+                            inVectorPositionIndex = i
+                        }
+                    }
+                }
+            }
+            inVectorIndex = xVectorIndexes[inVectorPositionIndex]
+        }
+        
+        func calculateOutVectorIndex() {
+            outVectorIndex = bVectorIndexes[0]
+            var outVectorPositionIndex = 0
+            for i in 1...bVectorIndexes.count - 1 {
+                let x0i = x0Vector.vectorNumbers[i].realValue
+                let xi = xMatrix.vectors[inVectorIndex-1].vectorNumbers[i].realValue
+                let bestx0i = x0Vector.vectorNumbers[outVectorPositionIndex].realValue
+                let bestxi = xMatrix.vectors[inVectorIndex-1].vectorNumbers[outVectorPositionIndex].realValue
+                if xi > 0 && x0i/xi < bestx0i/bestxi {
+                    outVectorPositionIndex = i
+                    outVectorIndex = bVectorIndexes[i]
+                }
+            }
+        }
     }
 }

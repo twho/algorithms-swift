@@ -23,6 +23,12 @@
 		6833157D255B6CFE004CFF39 /* LP1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6833157C255B6CFE004CFF39 /* LP1.swift */; };
 		68331583255B866C004CFF39 /* LinearProgrammingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68331582255B866C004CFF39 /* LinearProgrammingTests.swift */; };
 		68331586255B8699004CFF39 /* LP1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6833157C255B6CFE004CFF39 /* LP1.swift */; };
+		68331615255D0832004CFF39 /* SimplexDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68331614255D0832004CFF39 /* SimplexDS.swift */; };
+		68331619255D0A4C004CFF39 /* SimplexValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68331618255D0A4C004CFF39 /* SimplexValue.swift */; };
+		6833161E255D10D3004CFF39 /* SimplexDS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68331614255D0832004CFF39 /* SimplexDS.swift */; };
+		68331621255D10D6004CFF39 /* SimplexValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68331618255D0A4C004CFF39 /* SimplexValue.swift */; };
+		68331625255D12E3004CFF39 /* LP2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68331624255D12E3004CFF39 /* LP2.swift */; };
+		6833162A255D1446004CFF39 /* LP2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68331624255D12E3004CFF39 /* LP2.swift */; };
 		688A331C2545057300F76C56 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A331B2545057300F76C56 /* main.swift */; };
 		688A33802546933100F76C56 /* GR1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A337F2546933100F76C56 /* GR1.swift */; };
 		688A33852546957D00F76C56 /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 688A33842546957D00F76C56 /* Graph.swift */; };
@@ -57,6 +63,9 @@
 		682F8DD12547E0AC00C371FF /* GR2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GR2.swift; sourceTree = "<group>"; };
 		6833157C255B6CFE004CFF39 /* LP1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LP1.swift; sourceTree = "<group>"; };
 		68331582255B866C004CFF39 /* LinearProgrammingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearProgrammingTests.swift; sourceTree = "<group>"; };
+		68331614255D0832004CFF39 /* SimplexDS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplexDS.swift; sourceTree = "<group>"; };
+		68331618255D0A4C004CFF39 /* SimplexValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplexValue.swift; sourceTree = "<group>"; };
+		68331624255D12E3004CFF39 /* LP2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LP2.swift; sourceTree = "<group>"; };
 		688A33182545057200F76C56 /* AlgorithmsSwift */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = AlgorithmsSwift; sourceTree = BUILT_PRODUCTS_DIR; };
 		688A331B2545057300F76C56 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		688A33452545080A00F76C56 /* AlgorithmsSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlgorithmsSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,6 +112,9 @@
 			isa = PBXGroup;
 			children = (
 				6833157C255B6CFE004CFF39 /* LP1.swift */,
+				68331624255D12E3004CFF39 /* LP2.swift */,
+				68331614255D0832004CFF39 /* SimplexDS.swift */,
+				68331618255D0A4C004CFF39 /* SimplexValue.swift */,
 			);
 			path = LinearProgramming;
 			sourceTree = "<group>";
@@ -267,11 +279,14 @@
 			files = (
 				688A33852546957D00F76C56 /* Graph.swift in Sources */,
 				680F03A625535FB600D187FF /* MF4.swift in Sources */,
+				68331619255D0A4C004CFF39 /* SimplexValue.swift in Sources */,
+				68331625255D12E3004CFF39 /* LP2.swift in Sources */,
 				680F03962551306400D187FF /* MF2.swift in Sources */,
 				688A33802546933100F76C56 /* GR1.swift in Sources */,
 				68182D78254CDDA80000C39D /* MF1.swift in Sources */,
 				6815E5FE2554BA8E0011C165 /* MF5.swift in Sources */,
 				688A331C2545057300F76C56 /* main.swift in Sources */,
+				68331615255D0832004CFF39 /* SimplexDS.swift in Sources */,
 				680F039F25521CAA00D187FF /* MF3.swift in Sources */,
 				682F8DD22547E0AC00C371FF /* GR2.swift in Sources */,
 				6833157D255B6CFE004CFF39 /* LP1.swift in Sources */,
@@ -294,9 +309,12 @@
 				680F03992551306600D187FF /* MF2.swift in Sources */,
 				680F03A225521D4100D187FF /* MF3.swift in Sources */,
 				6815E5FA2554A41D0011C165 /* MF4.swift in Sources */,
+				6833161E255D10D3004CFF39 /* SimplexDS.swift in Sources */,
 				6815E6012554BA980011C165 /* MF5.swift in Sources */,
+				68331621255D10D6004CFF39 /* SimplexValue.swift in Sources */,
 				68EC2EA2254A8D8D00623738 /* GR3.swift in Sources */,
 				68182D73254CD4A80000C39D /* GR4.swift in Sources */,
+				6833162A255D1446004CFF39 /* LP2.swift in Sources */,
 				68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
