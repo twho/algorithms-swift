@@ -8,6 +8,9 @@
 class LP1 {
     /**
      Solve 3D linear programming example using Simplex algorithm.
+     a - constraint matrix in standard form (equality).
+     b - right hand side, should be non-negative.
+     c - objective vector.
      Reference: https://github.com/VladimirDinic/WDSimplexMethod
      */
     class SimplexMethod {
@@ -43,35 +46,34 @@ class LP1 {
             if iteration == 1 {
                 generateBMatrix()
                 bVectorSpaceBaseIndex.removeAll()
-                for i in 0...self.constraintEquations.count - 1 {
-                    bVectorSpaceBaseIndex.append(self.extendedSystemOfEquationsSize-self.constraintEquations.count+i+1)
+                for i in 0..<self.constraintEquations.count {
+                    bVectorSpaceBaseIndex.append(self.extendedSystemOfEquationsSize - self.constraintEquations.count + i + 1)
                 }
                 if let cVector = self.cVector {
                     c0Vector = SimplexVector()
                     for singleIndex in bVectorSpaceBaseIndex {
-                        c0Vector.vectorNumbers.append(cVector.vectorNumbers[singleIndex-1])
+                        c0Vector.vectorNumbers.append(cVector.vectorNumbers[singleIndex - 1])
                     }
                 }
                 let bInverse = self.bMatrix.transposeMatrix().inverseMatrix()
                 if let a0Vector = a0Vector {
                     x0Vector = bInverse * a0Vector
                 }
-                for i in 0...aVectors.count - 1 {
+                for i in 0..<aVectors.count {
                     if !bVectorSpaceBaseIndex.contains(i + 1) {
                         xMatrix.vectors.append(bInverse.transposeMatrix() * aVectors[i])
                         xVectorSpaceBaseIndex.append(i + 1)
                     }
                 }
             } else {
-                for i in 0...bVectorSpaceBaseIndex.count - 1 {
+                for i in 0..<bVectorSpaceBaseIndex.count {
                     if self.bVectorSpaceBaseIndex[i] == solution!.outVectorIndex {
                         self.bVectorSpaceBaseIndex[i] = solution!.inVectorIndex
                     }
                 }
                 generateBMatrix()
-                for i in 0...xVectorSpaceBaseIndex.count - 1 {
-                    if self.xVectorSpaceBaseIndex[i] == solution!.inVectorIndex
-                    {
+                for i in 0..<xVectorSpaceBaseIndex.count {
+                    if self.xVectorSpaceBaseIndex[i] == solution!.inVectorIndex {
                         self.xVectorSpaceBaseIndex[i] = solution!.outVectorIndex
                     }
                 }
@@ -92,23 +94,22 @@ class LP1 {
             }
             
             z0 = SimplexValue()
-            for i in 0...c0Vector.vectorNumbers.count - 1 {
+            for i in 0..<c0Vector.vectorNumbers.count {
                 z0 += c0Vector.vectorNumbers[i] * x0Vector.vectorNumbers[i]
             }
             
             zcValues.removeAll()
-            for xIndex in xVectorSpaceBaseIndex {
-                let index = xVectorSpaceBaseIndex.firstIndex(of: xIndex)!
-                zcValues.append(c0Vector * xMatrix.vectors[index] - (cVector?.vectorNumbers[xIndex-1])!)
+            for index in 0..<xVectorSpaceBaseIndex.count {
+                zcValues.append(c0Vector * xMatrix.vectors[index] - (cVector?.vectorNumbers[xVectorSpaceBaseIndex[index]-1])!)
             }
             
-            self.solution = SimplexSolution(equationTarget: valueTarget, zcVector: SimplexVector(vectorNumbers: zcValues), bVectorIndexes: bVectorSpaceBaseIndex,
-                                            xMatrix: xMatrix, x0Vector: x0Vector, xVectorIndexes: xVectorSpaceBaseIndex, optimumSolution: z0)
+            self.solution = SimplexSolution(target: valueTarget, zcVector: SimplexVector(vectorNumbers: zcValues), bVectorIndices: bVectorSpaceBaseIndex,
+                                            xMatrix: xMatrix, x0Vector: x0Vector, xVectorIndices: xVectorSpaceBaseIndex, optimumSolution: z0)
         }
         
         func generateVectors() {
             // Calculate the system of equations size.
-            for i in 0...self.constraintEquations.count - 1 {
+            for i in 0..<self.constraintEquations.count {
                 systemOfEquationsSize = max(self.constraintEquations[i].equationNumbers.count, systemOfEquationsSize)
             }
             calculateExtendedSystemOfEquationsSize()
@@ -131,7 +132,7 @@ class LP1 {
         }
         
         func calculateSystemOfEquationsSize() {
-            for i in 0...self.constraintEquations.count - 1 {
+            for i in 0..<self.constraintEquations.count {
                 systemOfEquationsSize = max(self.constraintEquations[i].equationNumbers.count, systemOfEquationsSize)
             }
         }
@@ -154,11 +155,11 @@ class LP1 {
                         self.cVector?.vectorNumbers.append(SimplexValue())
                     }
                 }
-                for _ in self.systemOfEquationsSize...self.extendedSystemOfEquationsSize-1-self.numberOfCorrections {
+                for _ in self.systemOfEquationsSize..<self.extendedSystemOfEquationsSize - self.numberOfCorrections {
                     self.cVector?.vectorNumbers.append(SimplexValue())
                 }
-                for i in self.systemOfEquationsSize+numberOfCorrections...self.extendedSystemOfEquationsSize - 1 {
-                    let singleEquation = self.constraintEquations[i - (self.systemOfEquationsSize+numberOfCorrections)]
+                for i in self.systemOfEquationsSize + numberOfCorrections..<self.extendedSystemOfEquationsSize {
+                    let singleEquation = self.constraintEquations[i - (self.systemOfEquationsSize + numberOfCorrections)]
                     if singleEquation.equality != Relation.lessOrEqual {
                         self.cVector?.vectorNumbers[i] = self.valueTarget == .max ? SimplexValue(mValue: -1) : SimplexValue(mValue: 1)
                     }
@@ -179,14 +180,14 @@ class LP1 {
             for _ in 1...systemOfEquationsSize {
                 self.aVectors.append(SimplexVector())
             }
-            for i in 0...self.constraintEquations.count - 1 {
+            for i in 0..<self.constraintEquations.count {
                 for j in 0...self.aVectors.count - 1 {
                     self.aVectors[j].vectorNumbers.append(self.constraintEquations[i].equationNumbers[j])
                 }
             }
-            for i in 0...self.constraintEquations.count - 1 {
+            for i in 0..<self.constraintEquations.count {
                 var vectorNumbers = [SimplexValue]()
-                for _ in 0...self.constraintEquations.count - 1 {
+                for _ in 0..<self.constraintEquations.count {
                     vectorNumbers.append(SimplexValue())
                 }
                 let singleEquation = self.constraintEquations[i]
@@ -195,9 +196,9 @@ class LP1 {
                     self.aVectors.append(SimplexVector(vectorNumbers: vectorNumbers))
                 }
             }
-            for i in 0...self.constraintEquations.count - 1 {
+            for i in 0..<self.constraintEquations.count {
                 var vectorNumbers = [SimplexValue]()
-                for _ in 0...self.constraintEquations.count - 1 {
+                for _ in 0..<self.constraintEquations.count {
                     vectorNumbers.append(SimplexValue())
                 }
                 vectorNumbers[i] = SimplexValue(realValue: 1, mValue: 0)
@@ -210,84 +211,74 @@ class LP1 {
         var target: Target
         var zcVector: SimplexVector
         var optimumSolution: SimplexValue
-        var xVectorIndexes: [Int]
-        var bVectorIndexes: [Int]
+        var xVectorIndices: [Int]
+        var bVectorIndices: [Int]
         var x0Vector: SimplexVector
         var xMatrix: SimplexMatrix
         var inVectorIndex = 0
         var outVectorIndex = 0
-        var solutionFound = false
+        var isSolutionFound: Bool {
+            for singleValue in zcVector.vectorNumbers {
+                switch target {
+                case .max:
+                    if singleValue.mValue < 0 || (singleValue.mValue == 0 && singleValue.realValue < 0) {
+                        return false
+                    }
+                case .min:
+                    if singleValue.mValue > 0 || (singleValue.mValue == 0 && singleValue.realValue > 0) {
+                        return false
+                    }
+                }
+            }
+            return true
+        }
         
-        init(equationTarget: Target, zcVector: SimplexVector, bVectorIndexes: [Int], xMatrix: SimplexMatrix, x0Vector: SimplexVector, xVectorIndexes: [Int], optimumSolution: SimplexValue) {
-            self.target = equationTarget
+        init(target: Target, zcVector: SimplexVector, bVectorIndices: [Int], xMatrix: SimplexMatrix, x0Vector: SimplexVector, xVectorIndices: [Int], optimumSolution: SimplexValue) {
+            self.target = target
             self.zcVector = zcVector
-            self.xVectorIndexes = xVectorIndexes
+            self.xVectorIndices = xVectorIndices
             self.optimumSolution = optimumSolution
-            self.bVectorIndexes = bVectorIndexes
+            self.bVectorIndices = bVectorIndices
             self.x0Vector = x0Vector
             self.xMatrix = xMatrix
-            self.checkIfSolutionIsFound()
-            if !solutionFound {
+            if !isSolutionFound {
                 self.calculateInVectorIndex()
                 self.calculateOutVectorIndex()
             }
         }
         
-        func checkIfSolutionIsFound() {
-            solutionFound = true
-            for singleValue in zcVector.vectorNumbers {
-                switch target {
-                case .max:
-                    if singleValue.mValue < 0 || (singleValue.mValue == 0 && singleValue.realValue < 0) {
-                        solutionFound = false
-                    }
-                case .min:
-                    if singleValue.mValue > 0 || (singleValue.mValue == 0 && singleValue.realValue > 0) {
-                        solutionFound = false
-                    }
-                }
-            }
-        }
-        
         func calculateInVectorIndex() {
-            inVectorIndex = xVectorIndexes[0]
+            inVectorIndex = xVectorIndices[0]
             var inVectorPositionIndex = 0
-            for i in 1...zcVector.vectorNumbers.count - 1 {
+            for i in 1..<zcVector.vectorNumbers.count {
                 switch target {
                 case .max:
-                    let cond1 = zcVector.vectorNumbers[i] < 0
                     let number1 = zcVector.vectorNumbers[i].abs()
                     let number2 = zcVector.vectorNumbers[inVectorPositionIndex].abs()
-                    let cond2 = number1 > number2
-                    let cond3 = zcVector.vectorNumbers[inVectorPositionIndex] > 0
-                    if cond1 && (cond3 || cond2) {
+                    if zcVector.vectorNumbers[i] < 0 &&
+                        (zcVector.vectorNumbers[inVectorPositionIndex] > 0 || number1 > number2) {
                         inVectorPositionIndex = i
                     }
                 case .min:
-                    for i in 1...zcVector.vectorNumbers.count - 1 {
-                        let cond1 = zcVector.vectorNumbers[i] > 0
-                        let cond2 = zcVector.vectorNumbers[i].abs() >= zcVector.vectorNumbers[inVectorPositionIndex].abs()
-                        if cond1 && cond2
-                        {
-                            inVectorPositionIndex = i
-                        }
+                    if zcVector.vectorNumbers[i] > 0 && zcVector.vectorNumbers[i].abs() >= zcVector.vectorNumbers[inVectorPositionIndex].abs() {
+                        inVectorPositionIndex = i
                     }
                 }
             }
-            inVectorIndex = xVectorIndexes[inVectorPositionIndex]
+            inVectorIndex = xVectorIndices[inVectorPositionIndex]
         }
         
         func calculateOutVectorIndex() {
-            outVectorIndex = bVectorIndexes[0]
+            outVectorIndex = bVectorIndices[0]
             var outVectorPositionIndex = 0
-            for i in 1...bVectorIndexes.count - 1 {
+            for i in 1..<bVectorIndices.count {
                 let x0i = x0Vector.vectorNumbers[i].realValue
-                let xi = xMatrix.vectors[inVectorIndex-1].vectorNumbers[i].realValue
-                let bestx0i = x0Vector.vectorNumbers[outVectorPositionIndex].realValue
-                let bestxi = xMatrix.vectors[inVectorIndex-1].vectorNumbers[outVectorPositionIndex].realValue
-                if xi > 0 && x0i/xi < bestx0i/bestxi {
+                let xi = xMatrix.vectors[inVectorIndex - 1].vectorNumbers[i].realValue
+                let bestX0i = x0Vector.vectorNumbers[outVectorPositionIndex].realValue
+                let bestXi = xMatrix.vectors[inVectorIndex - 1].vectorNumbers[outVectorPositionIndex].realValue
+                if xi > 0 && x0i/xi < bestX0i/bestXi {
                     outVectorPositionIndex = i
-                    outVectorIndex = bVectorIndexes[i]
+                    outVectorIndex = bVectorIndices[i]
                 }
             }
         }
