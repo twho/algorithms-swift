@@ -8,10 +8,38 @@
 class LP1 {
     /**
      Solve 3D linear programming example using Simplex algorithm.
-     a - constraint matrix in standard form (equality).
-     b - right hand side, should be non-negative.
-     c - objective vector.
-     Reference: https://github.com/VladimirDinic/WDSimplexMethod
+     For example:
+     Max x1 + 6*x2 + 10*x3
+         x1 ≤ 300
+         x2 ≤ 200
+         x1 + 3*x2 + 2*x3 ≤ 1000
+         x2 + 3*x3 ≤ 500
+         x1, x2, x3 ≥ 0
+     
+     Conver to matrix based on - max cx and ax ≤ b
+     a = [
+        [1, 0, 0]
+        [0, 1, 0]
+        [1, 3, 2]
+        [0, 1, 3]
+     ]
+     x = [x1, x2, x3]
+     b = [300, 200, 1000, 500]
+     c = [1, 6, 10]
+     
+     Add slack variables
+     a = [
+        [1, 0, 0, 1, 0, 0, 0]
+        [0, 1, 0, 0, 1, 0, 0]
+        [1, 3, 2, 0, 0, 1, 0]
+        [0, 1, 3, 0, 0, 0, 1]
+     ]
+     x = [x1, x2, x3, s1, s2, s3, s4]
+     b = [300, 200, 1000, 500]
+     c = [1, 6, 10, 0, 0, 0, 0]
+     
+     Academic reference: http://www.optimization-online.org/DB_FILE/2005/07/1180.pdf
+     Code reference: https://github.com/VladimirDinic/WDSimplexMethod
      */
     class SimplexMethod {
         private var iteration = 0
@@ -34,9 +62,9 @@ class LP1 {
         var extendedSystemOfEquationsSize = 0
         var systemOfEquationsSize = 0
         
-        init(mainEquation: SimplexEquation, constraintEquations: [SimplexEquation], valueTarget: Target) {
+        init(mainEquation: SimplexEquation, constraints: [SimplexEquation], valueTarget: Target) {
             self.mainEquation = mainEquation
-            self.constraintEquations = constraintEquations
+            self.constraintEquations = constraints
             self.valueTarget = valueTarget
             self.generateVectors()
         }
@@ -211,6 +239,13 @@ class LP1 {
         var target: Target
         var zcVector: SimplexVector
         var optimumSolution: SimplexValue
+        var optimumValue: Double {
+            let val = optimumSolution.realValue
+            if val >= 0, val <= Double(Int.max) {
+                return val
+            }
+            return -1
+        }
         var xVectorIndices: [Int]
         var bVectorIndices: [Int]
         var x0Vector: SimplexVector

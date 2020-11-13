@@ -22,7 +22,7 @@ class LinearProgrammingTests: XCTestCase {
             5. x1, x2, x3 are all greater than or equal to 0.
          */
         let simplex = LP1.SimplexMethod(mainEquation: SimplexEquation(equationNumbers:[1, 6, 10]),
-                                        constraintEquations: [
+                                        constraints: [
                                             SimplexEquation(equationNumbers:[1, 0, 0], equationSolution:300, Relation.lessOrEqual),
                                             SimplexEquation(equationNumbers:[0, 1, 0], equationSolution:200, Relation.lessOrEqual),
                                             SimplexEquation(equationNumbers:[1, 3, 2], equationSolution:1000, Relation.lessOrEqual),
@@ -55,7 +55,7 @@ class LinearProgrammingTests: XCTestCase {
             5. x1, x2, x3 are all greater than or equal to 0.
          */
         let output = lp2.findOptimumIntegerValue(mainEquation: SimplexEquation(equationNumbers:[1, 6, 10]),
-                                                 constraintEquations: [
+                                                 constraints: [
                                                     SimplexEquation(equationNumbers:[1, 0, 0], equationSolution:300, Relation.lessOrEqual),
                                                     SimplexEquation(equationNumbers:[0, 1, 0], equationSolution:200, Relation.lessOrEqual),
                                                     SimplexEquation(equationNumbers:[1, 3, 2], equationSolution:1000, Relation.lessOrEqual),
@@ -66,5 +66,45 @@ class LinearProgrammingTests: XCTestCase {
                                                  ],
                                                  valueTarget: .max)
         XCTAssertEqual(output, 2400)
+    }
+    
+    func testSimplexUnboundedExample1() {
+        /**
+         Find maximum of equation: 5x + 4y
+         Unbounded conditions:
+            1. x + y less than 7
+            2. x - y less than 8
+            3. x and y are greater than or equal to 0.
+         */
+        let isUnbounded = lp2.isEquationsUnbounded(mainEquation: SimplexEquation(equationNumbers:[5, 4]),
+                                                   constraints: [
+                                                    SimplexEquation(equationNumbers:[1, 0], equationSolution:7, Relation.lessOrEqual),
+                                                    SimplexEquation(equationNumbers:[1, -1], equationSolution:8, Relation.lessOrEqual),
+                                                    SimplexEquation(equationNumbers:[1, 0], equationSolution:0, Relation.greaterOrEqual),
+                                                    SimplexEquation(equationNumbers:[0, 1], equationSolution:0, Relation.greaterOrEqual)
+                                                   ],
+                                                   valueTarget: .max)
+        XCTAssertTrue(isUnbounded)
+    }
+    
+    func testSimplexUnboundedExample2() {
+        /**
+         Find maximum of equation: 2x + y
+         Bounded conditions:
+            1. 4*x + 3*y less than 12
+            2. 4*x + y less than 8
+            3. 4*x + 2*y less than 8
+            4. x and y are greater than or equal to 0.
+         */
+        let isUnbounded = lp2.isEquationsUnbounded(mainEquation: SimplexEquation(equationNumbers:[2, 1]),
+                                                   constraints: [
+                                                    SimplexEquation(equationNumbers:[4, 3], equationSolution:12, Relation.lessOrEqual),
+                                                    SimplexEquation(equationNumbers:[4, 1], equationSolution:8, Relation.lessOrEqual),
+                                                    SimplexEquation(equationNumbers:[4, 2], equationSolution:8, Relation.lessOrEqual),
+                                                    SimplexEquation(equationNumbers:[1, 0], equationSolution:0, Relation.greaterOrEqual),
+                                                    SimplexEquation(equationNumbers:[0, 1], equationSolution:0, Relation.greaterOrEqual)
+                                                   ],
+                                                   valueTarget: .max)
+        XCTAssertFalse(isUnbounded)
     }
 }
