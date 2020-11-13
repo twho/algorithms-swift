@@ -10,6 +10,7 @@ import XCTest
 class LinearProgrammingTests: XCTestCase {
     let lp1 = LP1()
     let lp2 = LP2()
+    let lp3 = LP3()
     
     func testSimplexExample() {
         /**
@@ -76,15 +77,15 @@ class LinearProgrammingTests: XCTestCase {
             2. x - y less than 8
             3. x and y are greater than or equal to 0.
          */
-        let isUnbounded = lp2.isEquationsUnbounded(mainEquation: SimplexEquation(equationNumbers:[5, 4]),
-                                                   constraints: [
-                                                    SimplexEquation(equationNumbers:[1, 0], equationSolution:7, Relation.lessOrEqual),
-                                                    SimplexEquation(equationNumbers:[1, -1], equationSolution:8, Relation.lessOrEqual),
-                                                    SimplexEquation(equationNumbers:[1, 0], equationSolution:0, Relation.greaterOrEqual),
-                                                    SimplexEquation(equationNumbers:[0, 1], equationSolution:0, Relation.greaterOrEqual)
-                                                   ],
-                                                   valueTarget: .max)
-        XCTAssertTrue(isUnbounded)
+        let resultType = lp3.findEquationResultType(mainEquation: SimplexEquation(equationNumbers:[5, 4]),
+                                                    constraints: [
+                                                        SimplexEquation(equationNumbers:[1, 0], equationSolution:7, Relation.lessOrEqual),
+                                                        SimplexEquation(equationNumbers:[1, -1], equationSolution:8, Relation.lessOrEqual),
+                                                        SimplexEquation(equationNumbers:[1, 0], equationSolution:0, Relation.greaterOrEqual),
+                                                        SimplexEquation(equationNumbers:[0, 1], equationSolution:0, Relation.greaterOrEqual)
+                                                    ],
+                                                    valueTarget: .max)
+        XCTAssertEqual(resultType, .unbounded)
     }
     
     func testSimplexUnboundedExample2() {
@@ -96,15 +97,15 @@ class LinearProgrammingTests: XCTestCase {
             3. 4*x + 2*y less than 8
             4. x and y are greater than or equal to 0.
          */
-        let isUnbounded = lp2.isEquationsUnbounded(mainEquation: SimplexEquation(equationNumbers:[2, 1]),
-                                                   constraints: [
-                                                    SimplexEquation(equationNumbers:[4, 3], equationSolution:12, Relation.lessOrEqual),
-                                                    SimplexEquation(equationNumbers:[4, 1], equationSolution:8, Relation.lessOrEqual),
-                                                    SimplexEquation(equationNumbers:[4, 2], equationSolution:8, Relation.lessOrEqual),
-                                                    SimplexEquation(equationNumbers:[1, 0], equationSolution:0, Relation.greaterOrEqual),
-                                                    SimplexEquation(equationNumbers:[0, 1], equationSolution:0, Relation.greaterOrEqual)
-                                                   ],
-                                                   valueTarget: .max)
-        XCTAssertFalse(isUnbounded)
+        let resultType = lp3.findEquationResultType(mainEquation: SimplexEquation(equationNumbers:[2, 1]),
+                                                    constraints: [
+                                                        SimplexEquation(equationNumbers:[4, 3], equationSolution:12, Relation.lessOrEqual),
+                                                        SimplexEquation(equationNumbers:[4, 1], equationSolution:8, Relation.lessOrEqual),
+                                                        SimplexEquation(equationNumbers:[4, 2], equationSolution:8, Relation.lessOrEqual),
+                                                        SimplexEquation(equationNumbers:[1, 0], equationSolution:0, Relation.greaterOrEqual),
+                                                        SimplexEquation(equationNumbers:[0, 1], equationSolution:0, Relation.greaterOrEqual)
+                                                    ],
+                                                    valueTarget: .max)
+        XCTAssertEqual(resultType, .optimum)
     }
 }

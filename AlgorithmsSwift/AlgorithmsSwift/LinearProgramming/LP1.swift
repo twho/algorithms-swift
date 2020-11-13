@@ -61,12 +61,32 @@ class LP1 {
         var solution: SimplexSolution?
         var extendedSystemOfEquationsSize = 0
         var systemOfEquationsSize = 0
+        var resultType: ResultType {
+            if let sol = solution {
+                let val = sol.optimumValue
+                if val < 0 || val > Double(Int.max) {
+                    return .unbounded
+                }
+                return .optimum
+            } else {
+                return .infeasible
+            }
+        }
         
         init(mainEquation: SimplexEquation, constraints: [SimplexEquation], valueTarget: Target) {
             self.mainEquation = mainEquation
             self.constraintEquations = constraints
             self.valueTarget = valueTarget
             self.generateVectors()
+        }
+        /**
+         Iterate and generate updated Simplex tableau until the terminal condition is met.
+         */
+        func iterate() {
+            self.nextIteration()
+            while let solution = self.solution, !solution.isSolutionFound {
+                self.nextIteration()
+            }
         }
         
         func nextIteration() {

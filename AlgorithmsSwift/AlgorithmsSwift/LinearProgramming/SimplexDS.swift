@@ -20,6 +20,12 @@ enum Relation {
     case lessOrEqual
 }
 
+enum ResultType {
+    case unbounded
+    case infeasible
+    case optimum
+}
+
 struct SimplexEquation {
     var equationNumbers = [SimplexValue]()
     var helpEquationNumbers = [SimplexValue]()
