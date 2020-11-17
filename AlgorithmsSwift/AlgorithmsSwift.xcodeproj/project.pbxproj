@@ -16,6 +16,9 @@
 		68115D28255E10C30090C5A8 /* LP3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68115D27255E10C30090C5A8 /* LP3.swift */; };
 		68115D2B255E11630090C5A8 /* LP3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68115D27255E10C30090C5A8 /* LP3.swift */; };
 		68115D2F255E605A0090C5A8 /* LP4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68115D2E255E605A0090C5A8 /* LP4.swift */; };
+		68115D33255E6DBD0090C5A8 /* DP1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68115D32255E6DBD0090C5A8 /* DP1.swift */; };
+		68115D36255E6DC50090C5A8 /* DP1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68115D32255E6DBD0090C5A8 /* DP1.swift */; };
+		68115D3A255E6DD50090C5A8 /* DynamicProgrammingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68115D39255E6DD50090C5A8 /* DynamicProgrammingTests.swift */; };
 		6815E5FA2554A41D0011C165 /* MF4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F03A525535FB600D187FF /* MF4.swift */; };
 		6815E5FE2554BA8E0011C165 /* MF5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6815E5FD2554BA8E0011C165 /* MF5.swift */; };
 		6815E6012554BA980011C165 /* MF5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6815E5FD2554BA8E0011C165 /* MF5.swift */; };
@@ -62,6 +65,8 @@
 		680F03A525535FB600D187FF /* MF4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF4.swift; sourceTree = "<group>"; };
 		68115D27255E10C30090C5A8 /* LP3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LP3.swift; sourceTree = "<group>"; };
 		68115D2E255E605A0090C5A8 /* LP4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LP4.swift; sourceTree = "<group>"; };
+		68115D32255E6DBD0090C5A8 /* DP1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DP1.swift; sourceTree = "<group>"; };
+		68115D39255E6DD50090C5A8 /* DynamicProgrammingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicProgrammingTests.swift; sourceTree = "<group>"; };
 		6815E5FD2554BA8E0011C165 /* MF5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF5.swift; sourceTree = "<group>"; };
 		68182D77254CDDA80000C39D /* MF1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF1.swift; sourceTree = "<group>"; };
 		68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxFlowTests.swift; sourceTree = "<group>"; };
@@ -160,6 +165,7 @@
 		688A33462545080A00F76C56 /* AlgorithmsSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				68115D39255E6DD50090C5A8 /* DynamicProgrammingTests.swift */,
 				688A33962546984C00F76C56 /* GraphTests.swift */,
 				68331582255B866C004CFF39 /* LinearProgrammingTests.swift */,
 				68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */,
@@ -172,6 +178,7 @@
 		688A337925454F3100F76C56 /* DynamicProgramming */ = {
 			isa = PBXGroup;
 			children = (
+				68115D32255E6DBD0090C5A8 /* DP1.swift */,
 			);
 			path = DynamicProgramming;
 			sourceTree = "<group>";
@@ -287,6 +294,7 @@
 				688A33852546957D00F76C56 /* Graph.swift in Sources */,
 				68115D2F255E605A0090C5A8 /* LP4.swift in Sources */,
 				680F03A625535FB600D187FF /* MF4.swift in Sources */,
+				68115D33255E6DBD0090C5A8 /* DP1.swift in Sources */,
 				68331619255D0A4C004CFF39 /* SimplexValue.swift in Sources */,
 				68115D28255E10C30090C5A8 /* LP3.swift in Sources */,
 				68331625255D12E3004CFF39 /* LP2.swift in Sources */,
@@ -321,11 +329,13 @@
 				6815E5FA2554A41D0011C165 /* MF4.swift in Sources */,
 				6833161E255D10D3004CFF39 /* SimplexDS.swift in Sources */,
 				6815E6012554BA980011C165 /* MF5.swift in Sources */,
+				68115D36255E6DC50090C5A8 /* DP1.swift in Sources */,
 				68331621255D10D6004CFF39 /* SimplexValue.swift in Sources */,
 				68EC2EA2254A8D8D00623738 /* GR3.swift in Sources */,
 				68182D73254CD4A80000C39D /* GR4.swift in Sources */,
 				6833162A255D1446004CFF39 /* LP2.swift in Sources */,
 				68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */,
+				68115D3A255E6DD50090C5A8 /* DynamicProgrammingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
