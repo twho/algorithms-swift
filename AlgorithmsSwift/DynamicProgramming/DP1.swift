@@ -52,4 +52,16 @@ class DP1 {
             return dp[n]
         }
     }
+    /**
+     A series of longest subsequence problems and their solutions. Subsequence is different from substring. Subsequence is a subset
+     of elements in order that can be derived from another sequence while substring has to be a set of consecutive elements.
+     */
+    class LongestSubsequence {
+        /**
+         
+         */
+        func findLongestIncreasingSubsequence() {
+            
+        }
+    }
 }
