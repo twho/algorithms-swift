@@ -9,9 +9,9 @@ on:
       - master
 
 jobs:
-  test:
-    name: Test
-    runs-on: macos-latest
+  build:
+
+    runs-on: macOS-latest
     
     steps:
       - uses: actions/checkout@master
