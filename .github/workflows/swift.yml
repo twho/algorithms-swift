@@ -1,4 +1,4 @@
-name: Swift
+name: Swift MacOS
 
 on: 
   push:
@@ -9,11 +9,11 @@ on:
       - master
 
 jobs:
-  build:
-
-    runs-on: macOS-latest
+  test:
+    name: Test
+    runs-on: macos-latest
     
     steps:
-    - uses: actions/checkout@master
-    - name: Start xcodebuild test
-      run: xcodebuild clean test -project AlgorithmsSwift.xcodeproj -scheme AlgorithmsSwift -destination "platform=iOS Simulator,name=iPhone 12 Pro"
+      - uses: actions/checkout@master
+      - name: Build and test
+        run: xcodebuild clean test -project AlgorithmsSwift.xcodeproj -scheme AlgorithmsSwift -destination 'platform=OS X,arch=x86_64' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
