@@ -1,19 +1,19 @@
 name: Swift
 
-on:
+on: 
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches: 
+      - master
 
 jobs:
   build:
 
-    runs-on: macos-latest
-
+    runs-on: macOS-latest
+    
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+    - uses: actions/checkout@master
+    - name: Start xcodebuild test
+      run: xcodebuild clean test -project AlgorithmsSwift.xcodeproj -scheme AlgorithmsSwift -destination "platform=iOS Simulator,name=iPhone 12 Pro"
