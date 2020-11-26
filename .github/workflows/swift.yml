@@ -9,11 +9,11 @@ on:
       - master
 
 jobs:
-  test:
-    name: Test
-    runs-on: macos-latest
+  build:
+
+    runs-on: macOS-latest
     
     steps:
       - uses: actions/checkout@master
       - name: Build and test
-        run: xcodebuild clean test -project AlgorithmsSwift.xcodeproj -scheme AlgorithmsSwift -destination 'platform=OS X,arch=x86_64' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
+        run: xcodebuild clean test -project AlgorithmsSwift.xcodeproj -scheme AlgorithmsSwift -destination 'platform=OS X, arch=x86_64' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO ONLY_ACTIVE_ARCH=NO
