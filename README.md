@@ -10,12 +10,11 @@
 - Longest Uncommon Subsequence
 - Longest Increasing Subsequence
 
-#### Lesson 2 
+#### Lesson 2 - [source code](AlgorithmsSwift/AlgorithmsSwift/DynamicProgramming/DP2.swift)
 - Knapsack problems with or without repetition of items
 - Chain Matrix Multiplication
-- Balanced Binary Tree
 
-#### Lesson 3
+#### Lesson 3 - [source code](AlgorithmsSwift/AlgorithmsSwift/DynamicProgramming/DP3.swift)
 - Find the shortest path using Dijkstra's algorithm
 - Find the shortest path using Bellman-Ford's algorithm
 
