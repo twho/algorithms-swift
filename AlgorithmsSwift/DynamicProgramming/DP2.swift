@@ -84,16 +84,25 @@ class DP2 {
      */
     class MatrixMultiply {
         /**
-         The recursive method used to calculate chain multiply matrix problems.
+         The recursive method used to calculate chain multiply matrix problems. Note that an array with N
+         numbers represents N - 1 matrices, For example, [1, 2, 3, 4] represents 3 matrices 1x2, 2x3 and 3x4.
+         We set the start to be 1 instead of 0 since the number at index 1 is the one used to multiply the
+         next matrix in the input.
+         
+         - Parameter matrices: The array of matrix, refer to the description above for the expressions.
+         - Parameter start:    The start of the serial calculation.
+         - Parameter end:      The tail of the serial calculation.
+         
+         - Returns: The result of the minimum cost calculation.
          */
-        func chainMatrixMultiply(_ matrix: [Int], _ start: Int, _ end: Int) -> Int {
+        func chainMatrixMultiply(_ matrices: [Int], _ start: Int, _ end: Int) -> Int {
             if start == end {
                 return 0
             }
 
             var minVal = Int.max;
             for l in start..<end {
-                let count = chainMatrixMultiply(matrix, start, l) + chainMatrixMultiply(matrix, l + 1, end) + matrix[start - 1]*matrix[l]*matrix[end]
+                let count = chainMatrixMultiply(matrices, start, l) + chainMatrixMultiply(matrices, l + 1, end) + matrices[start - 1] * matrices[l] * matrices[end]
                 minVal = min(minVal, count)
             }
             return minVal
@@ -101,18 +110,16 @@ class DP2 {
         /**
          The dynamic programming used to calculate chain multiply matrix problems. Note that the calculation
          merely focuses on how to decide which order to perform the multiplication. The runtime is O(N^3)
-         where N is the number of matrices. Example input like {10, 20, 30, 40}, which stands for
-         3 matrices 10x20, 20x30 and 30x40.
+         where N is the number of matrices. For example, input like [10, 20, 30, 40] represents 3 matrices
+         10x20, 20x30 and 30x40.
          Reference: https://www.geeksforgeeks.org/matrix-chain-multiplication-dp-8/
          
-         - Parameter matrix: The array of matrix, refer to the description above for the expressions.
-         - Parameter start:  The start of the serial calculation.
-         - Parameter end:    The tail of the serial calculation.
+         - Parameter matrices: The array of matrix, refer to the description above for the expressions.
          
          - Returns: The result of the minimum cost calculation.
          */
-        func dpChainMatrixMultiply(_ matrix: [Int]) -> Int {
-            let n = matrix.count
+        func dpChainMatrixMultiply(_ matrices: [Int]) -> Int {
+            let n = matrices.count
             var dp = Array(repeating: Array(repeating: 0, count: n), count: n)
             for i in 1..<n {
                 dp[i][i] = 0
@@ -125,7 +132,7 @@ class DP2 {
                     }
                     dp[i][j] = Int.max
                     for k in i...j - 1 {
-                        let q = dp[i][k] + dp[k + 1][j] + matrix[i - 1] * matrix[k] * matrix[j];
+                        let q = dp[i][k] + dp[k + 1][j] + matrices[i - 1] * matrices[k] * matrices[j];
                         dp[i][j] = min(q, dp[i][j])
                     }
                 }
