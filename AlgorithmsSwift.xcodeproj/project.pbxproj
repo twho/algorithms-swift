@@ -25,6 +25,10 @@
 		68182D73254CD4A80000C39D /* GR4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68EC2F4A254B79B500623738 /* GR4.swift */; };
 		68182D78254CDDA80000C39D /* MF1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D77254CDDA80000C39D /* MF1.swift */; };
 		68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */; };
+		681870E8257C4C830094B367 /* DP2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681870E7257C4C820094B367 /* DP2.swift */; };
+		681870EB257C4F240094B367 /* DP2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681870E7257C4C820094B367 /* DP2.swift */; };
+		681870EF257CBF9D0094B367 /* DP3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681870EE257CBF9D0094B367 /* DP3.swift */; };
+		681870F2257CBFA10094B367 /* DP3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 681870EE257CBF9D0094B367 /* DP3.swift */; };
 		682F8DD22547E0AC00C371FF /* GR2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 682F8DD12547E0AC00C371FF /* GR2.swift */; };
 		6833157D255B6CFE004CFF39 /* LP1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6833157C255B6CFE004CFF39 /* LP1.swift */; };
 		68331583255B866C004CFF39 /* LinearProgrammingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68331582255B866C004CFF39 /* LinearProgrammingTests.swift */; };
@@ -70,6 +74,8 @@
 		6815E5FD2554BA8E0011C165 /* MF5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF5.swift; sourceTree = "<group>"; };
 		68182D77254CDDA80000C39D /* MF1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF1.swift; sourceTree = "<group>"; };
 		68182D7B254CDDBF0000C39D /* MaxFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaxFlowTests.swift; sourceTree = "<group>"; };
+		681870E7257C4C820094B367 /* DP2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DP2.swift; sourceTree = "<group>"; };
+		681870EE257CBF9D0094B367 /* DP3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DP3.swift; sourceTree = "<group>"; };
 		682F8DD12547E0AC00C371FF /* GR2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GR2.swift; sourceTree = "<group>"; };
 		6833157C255B6CFE004CFF39 /* LP1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LP1.swift; sourceTree = "<group>"; };
 		68331582255B866C004CFF39 /* LinearProgrammingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinearProgrammingTests.swift; sourceTree = "<group>"; };
@@ -179,6 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				68115D32255E6DBD0090C5A8 /* DP1.swift */,
+				681870E7257C4C820094B367 /* DP2.swift */,
+				681870EE257CBF9D0094B367 /* DP3.swift */,
 			);
 			path = DynamicProgramming;
 			sourceTree = "<group>";
@@ -304,11 +312,13 @@
 				6815E5FE2554BA8E0011C165 /* MF5.swift in Sources */,
 				688A331C2545057300F76C56 /* main.swift in Sources */,
 				68331615255D0832004CFF39 /* SimplexDS.swift in Sources */,
+				681870E8257C4C830094B367 /* DP2.swift in Sources */,
 				680F039F25521CAA00D187FF /* MF3.swift in Sources */,
 				682F8DD22547E0AC00C371FF /* GR2.swift in Sources */,
 				6833157D255B6CFE004CFF39 /* LP1.swift in Sources */,
 				68EC2E042549DA1C00623738 /* GR3.swift in Sources */,
 				68EC2F4B254B79B500623738 /* GR4.swift in Sources */,
+				681870EF257CBF9D0094B367 /* DP3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -322,6 +332,7 @@
 				688A339C2546986F00F76C56 /* GR1.swift in Sources */,
 				68331583255B866C004CFF39 /* LinearProgrammingTests.swift in Sources */,
 				688A33972546984C00F76C56 /* GraphTests.swift in Sources */,
+				681870EB257C4F240094B367 /* DP2.swift in Sources */,
 				68EC2E002549415200623738 /* GR2.swift in Sources */,
 				680F03992551306600D187FF /* MF2.swift in Sources */,
 				680F03A225521D4100D187FF /* MF3.swift in Sources */,
@@ -336,6 +347,7 @@
 				6833162A255D1446004CFF39 /* LP2.swift in Sources */,
 				68182D7C254CDDBF0000C39D /* MaxFlowTests.swift in Sources */,
 				68115D3A255E6DD50090C5A8 /* DynamicProgrammingTests.swift in Sources */,
+				681870F2257CBFA10094B367 /* DP3.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
