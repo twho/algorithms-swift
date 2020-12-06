@@ -7,7 +7,6 @@
 #### Lesson 1 - [source code](AlgorithmsSwift/DynamicProgramming/DP1.swift)
 - Fibonacci
 - Longest Common Subsequence
-- Longest Uncommon Subsequence
 - Longest Increasing Subsequence
 
 #### Lesson 2 - [source code](AlgorithmsSwift/DynamicProgramming/DP2.swift)
