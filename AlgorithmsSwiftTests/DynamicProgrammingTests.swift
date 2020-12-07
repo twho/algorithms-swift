@@ -12,6 +12,8 @@ class DynamicProgrammingTests: XCTestCase {
     let longestSubsequence = DP1.LongestSubsequence()
     let knapsack = DP2.KnapSack()
     let matrixMultiply = DP2.MatrixMultiply()
+    let dijkstra = DP3.Dijkstra()
+    let bellmanFord = DP3.BellmanFord()
     
     func testFibonacci() {
         var time = 0
@@ -75,5 +77,46 @@ class DynamicProgrammingTests: XCTestCase {
         let input = [40, 20, 30, 10, 30]
         let expected = 26000
         XCTAssertEqual(expected, matrixMultiply.dpChainMatrixMultiply(input))
+    }
+    
+    func testDijkstraShortestPath() {
+        let graph = Graph()
+        graph.addEdge(from: 0, to: 1, weight: 1) // add edge 0-1
+        graph.addEdge(from: 0, to: 2, weight: 4) // add edge 0-2
+        graph.addEdge(from: 1, to: 2, weight: 3) // add edge 1-2
+        graph.addEdge(from: 1, to: 3, weight: 2) // add edge 1-3
+        graph.addEdge(from: 1, to: 4, weight: 2) // add edge 1-4
+        graph.addEdge(from: 3, to: 2, weight: 5) // add edge 3-2
+        graph.addEdge(from: 3, to: 1, weight: 1) // add edge 3-1
+        graph.addEdge(from: 4, to: 3, weight: 3) // add edge 4-3
+        let expected = [0, 1, 4, 3, 3]
+        XCTAssertEqual(expected, dijkstra.shortestPath(graph, 0))
+    }
+    
+    func testBellmanFordShortestPath() {
+        let graph = Graph()
+        graph.addEdge(from: 0, to: 1, weight: -1) // add edge 0-1
+        graph.addEdge(from: 0, to: 2, weight: 4)  // add edge 0-2
+        graph.addEdge(from: 1, to: 2, weight: 3)  // add edge 1-2
+        graph.addEdge(from: 1, to: 3, weight: 2)  // add edge 1-3
+        graph.addEdge(from: 1, to: 4, weight: 2)  // add edge 1-4
+        graph.addEdge(from: 3, to: 2, weight: 5)  // add edge 3-2
+        graph.addEdge(from: 3, to: 1, weight: 1)  // add edge 3-1
+        graph.addEdge(from: 4, to: 3, weight: -3) // add edge 4-3
+        let expected = [0, -1, 2, -2, 1]
+        let output = bellmanFord.shortestPath(graph, 0)
+        XCTAssertEqual(expected, output.dist)
+        XCTAssertFalse(output.hasNegativeCycle)
+    }
+    
+    func testBellmanFordShortestPathWithNegativeCycle() {
+        let graph = Graph()
+        graph.addEdge(from: 0, to: 1, weight: 1)   // add edge 0-1
+        graph.addEdge(from: 1, to: 2, weight: -1)  // add edge 1-2
+        graph.addEdge(from: 2, to: 3, weight: -1)  // add edge 2-3
+        graph.addEdge(from: 3, to: 0, weight: -1)  // add edge 3-0
+        let output = bellmanFord.shortestPath(graph, 0)
+        XCTAssertEqual(0, output.dist.count)
+        XCTAssertTrue(output.hasNegativeCycle)
     }
 }

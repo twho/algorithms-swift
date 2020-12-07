@@ -28,6 +28,20 @@ class Graph {
         return edges
     }
     /**
+     Returns all directed edges if the graph is directed.
+     */
+    var directedEdges: Set<Edge> {
+        guard self.isDirected else { return [] }
+        
+        var edges = Set<Edge>()
+        for vertex in self.adjacencyLists.keys {
+            for edge in self.adjacencyLists[vertex]! {
+                edges.insert(edge)
+            }
+        }
+        return edges
+    }
+    /**
      Instantiation.
      
      - Parameter isDirected: Determine if the graph is directed or undirected.

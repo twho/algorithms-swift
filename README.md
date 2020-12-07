@@ -16,6 +16,7 @@
 #### Lesson 3 - [source code](AlgorithmsSwift/DynamicProgramming/DP3.swift)
 - Find the shortest path using Dijkstra's algorithm
 - Find the shortest path using Bellman-Ford's algorithm
+- Find negative weight cycle using Floyd Warshall's algorithm *(incomplete)*
 
 ### [Randomized Algorithms](https://classroom.udacity.com/courses/ud401/lessons/10043970561/concepts/100419526680923)
 #### Lesson 1

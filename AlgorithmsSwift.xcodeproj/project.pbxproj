@@ -160,8 +160,8 @@
 			children = (
 				688A337925454F3100F76C56 /* DynamicProgramming */,
 				688A337A25454F5500F76C56 /* Graph */,
-				6833157B255B6CE2004CFF39 /* LinearProgramming */,
 				68182D76254CDD980000C39D /* MaxFlow */,
+				6833157B255B6CE2004CFF39 /* LinearProgramming */,
 				688A33832546957400F76C56 /* Shared */,
 				688A331B2545057300F76C56 /* main.swift */,
 			);
