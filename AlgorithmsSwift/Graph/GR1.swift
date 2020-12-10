@@ -9,7 +9,7 @@ class GR1 {
     /**
      The function traverses through the undirected graph using DFS method. Runtime: O(V + E), where V represents vertices and E represents edges.
      
-     - Parameter graph: An undirected graph.
+     - Parameter graph: A directed graph.
      
      - Returns: An integer array of DFS traverse result.
      */
@@ -49,7 +49,7 @@ class GR1 {
     /**
      The function traverses through the undirected graph using BFS method. Runtime: O(V + E), where V represents vertices and E represents edges.
      
-     - Parameter graph: An undirected graph.
+     - Parameter graph: A directed graph.
      
      - Returns: An integer array of BFS traverse result.
      */
@@ -118,7 +118,7 @@ class GR1 {
      must be printed before the destination of the edge. Note that a graph could have multiple topological output. In addition, a graph has to be
      a directed acyclic graph (DAG) in order to be sorted topologically. Runtime: O(V + E)
      
-     - Parameter graph: An undirected graph.
+     - Parameter graph: A directed graph.
      
      - Returns: An integer array of topological sorting result.
      */
@@ -132,9 +132,56 @@ class GR1 {
                 dfsHelper(sourceVertex, graph.adjacencyLists, &visited, &output)
             }
         }
-        
+        // The reverse order of DFS reflects topological sort. Use a stack during traversal.
         return output.reversed().map { (vertex) -> Int in
             return vertex.val
         }
+    }
+    /**
+     The function adapts topological sorting method and add a set to record current exploration.
+     
+     - Parameter graph: A directed graph.
+     
+     - Returns: A boolean indicates if the directed
+     */
+    func detectCycleInDirectedGraph(_ graph: Graph) -> Bool {
+        var visited = Set<Vertex>()
+        var exploration = Set<Vertex>()
+        for vertex in graph.adjacencyLists.keys {
+            if !visited.contains(vertex) {
+                if cycleDetectionHelper(vertex, graph.adjacencyLists, &visited, &exploration) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    /**
+     The function is used as a DFS recursive method.
+     
+     - Parameter vertex:        The vertex to explore its relevant edges.
+     - Parameter adjacency:     The adjacency lists used in the graph.
+     - Parameter visited:       The visisted vertices in the current traverse.
+     - Parameter exploration:   The vertices in the current exploration, which will be removed after the current exploration is done.
+     */
+    private func cycleDetectionHelper(_ vertex: Vertex, _ adjacency: [Vertex : Set<Edge>], _ visited: inout Set<Vertex>, _ exploration: inout Set<Vertex>) -> Bool {
+        if exploration.contains(vertex) {
+            return true
+        }
+        visited.insert(vertex)
+        exploration.insert(vertex)
+        if let edges = adjacency[vertex] {
+            for edge in edges {
+                if !visited.contains(edge.dest) {
+                    if cycleDetectionHelper(edge.dest, adjacency, &visited, &exploration) {
+                        return true
+                    }
+                } else if edge.dest == vertex {
+                    return true
+                }
+            }
+        }
+        exploration.remove(vertex)
+        return false
     }
 }

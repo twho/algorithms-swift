@@ -85,7 +85,7 @@ class GraphTests: XCTestCase {
     }
     
     // MARK: - Topological Sort
-    func testTopologicalSort() {
+    func testTopologicalSort1() {
         let graph = Graph()
         graph.addEdge(from: 5, to: 0)   // add edge 5-0
         graph.addEdge(from: 4, to: 0)   // add edge 4-0
@@ -101,6 +101,43 @@ class GraphTests: XCTestCase {
             [5, 2, 3, 4, 1, 0]
         ]
         XCTAssertTrue(possibleDFSPaths.contains(gr1.topologicalSortByDFS(graph)))
+    }
+    
+    func testTopologicalSort2() {
+        let graph = Graph()
+        graph.addEdge(from: 4, to: 3)   // add edge 4-3
+        graph.addEdge(from: 4, to: 2)   // add edge 4-2
+        graph.addEdge(from: 3, to: 2)   // add edge 3-2
+        graph.addEdge(from: 4, to: 1)   // add edge 4-1
+        graph.addEdge(from: 1, to: 0)   // add edge 1-0
+        graph.addEdge(from: 2, to: 0)   // add edge 2-0
+        graph.addEdge(from: 2, to: 1)   // add edge 2-1
+        // Source vertices is 4.
+        let expected = [4, 3, 2, 1, 0]
+        XCTAssertEqual(expected, gr1.topologicalSortByDFS(graph))
+    }
+    
+    func testDirectedGraphCycleDetection1() {
+        let graph = Graph()
+        graph.addEdge(from: 4, to: 3)   // add edge 4-3
+        graph.addEdge(from: 4, to: 2)   // add edge 4-2
+        graph.addEdge(from: 3, to: 2)   // add edge 3-2
+        graph.addEdge(from: 4, to: 1)   // add edge 4-1
+        graph.addEdge(from: 1, to: 0)   // add edge 1-0
+        graph.addEdge(from: 2, to: 0)   // add edge 2-0
+        graph.addEdge(from: 2, to: 1)   // add edge 2-1
+        XCTAssertFalse(gr1.detectCycleInDirectedGraph(graph))
+    }
+    
+    func testDirectedGraphCycleDetection2() {
+        let graph = Graph()
+        graph.addEdge(from: 0, to: 1)   // add edge 0-1
+        graph.addEdge(from: 1, to: 2)   // add edge 1-2
+        graph.addEdge(from: 0, to: 2)   // add edge 0-2
+        graph.addEdge(from: 2, to: 0)   // add edge 2-0
+        graph.addEdge(from: 2, to: 3)   // add edge 2-3
+        graph.addEdge(from: 3, to: 3)   // add edge 3-3
+        XCTAssertTrue(gr1.detectCycleInDirectedGraph(graph))
     }
     
     func testFindBridge() {
