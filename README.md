@@ -19,10 +19,11 @@
 - Find negative weight cycle using Floyd Warshall's algorithm *(incomplete)*
 
 ### [Randomized Algorithms](https://classroom.udacity.com/courses/ud401/lessons/10043970561/concepts/100419526680923)
-#### Lesson 1
+#### Lesson 1 - [source code](AlgorithmsSwift/RandomizedAlgorithms/RA1.swift)
 - Modular Arithmetic
 - Multiplicative Inverses
 - Euclid's Algorithm [(GCD)](https://en.wikipedia.org/wiki/Greatest_common_divisor)
+- Extended Euclid's Algorithm
 
 #### Lesson 2
 - RSA Algorithm and Implementation
