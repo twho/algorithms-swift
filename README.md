@@ -101,6 +101,9 @@
 #### Lesson 4 - [source code](AlgorithmsSwift/LinearProgramming/LP4.swift)
 - Application - Max SAT problem *(incomplete)*
 
+### [NP-completeness](https://classroom.udacity.com/courses/ud401/lessons/10256549078/concepts/bdc2314b-8d9a-492d-b93f-1b1a6b440fd5)
+#### Lesson 1 - Lesson 5 *(Not covered in this repo)*
+
 ### Credits: 
 - [Udacity Course - Introducation to Graduate Algorithms](https://classroom.udacity.com/courses/ud401)
 - [Geeks for Geeks](https://www.geeksforgeeks.org/)
