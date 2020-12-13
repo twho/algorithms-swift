@@ -16,8 +16,10 @@ class RA1 {
      
      - Returns: The computation result.
      */
-    func modularExp(_ x: inout Int, _ y: inout Int, _ N: Int) -> Int {
+    static func modularExp(_ x: Int, _ y: Int, _ N: Int) -> Int {
         var result = 1
+        var x = x
+        var y = y
         while y > 0 {
             /**
              If the exponential is not the muliply of 2,
@@ -44,9 +46,10 @@ class RA1 {
      - Parameter x: The integer as a base number.
      - Parameter N: The modulo N.
      
-     Returns: The computation result.
+     - Returns: The computation result.
      */
-    static func multiplicativeInverse(_ x: inout Int, _ N: Int) -> Int {
+    static func multiplicativeInverse(_ x: Int, _ N: Int) -> Int {
+        var x = x
         x = x%N
         // We only need to try N - 1 times so that all remainders
         // from modular of N is considered.
