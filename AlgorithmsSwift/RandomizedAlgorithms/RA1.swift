@@ -46,7 +46,7 @@ class RA1 {
      
      Returns: The computation result.
      */
-    func multiplicativeInverse(_ x: inout Int, _ N: Int) -> Int {
+    static func multiplicativeInverse(_ x: inout Int, _ N: Int) -> Int {
         x = x%N
         // We only need to try N - 1 times so that all remainders
         // from modular of N is considered.
@@ -70,7 +70,7 @@ class RA1 {
          
          - Returns: The greatest common divisor derived by the algorithm.
          */
-        func euclidAlgorithm(_ x: Int, _ y: Int) -> Int {
+        static func euclidAlgorithm(_ x: Int, _ y: Int) -> Int {
             if x == 0 {
                 return y
             }

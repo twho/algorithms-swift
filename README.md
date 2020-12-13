@@ -25,7 +25,8 @@
 - Euclid's Algorithm [(GCD)](https://en.wikipedia.org/wiki/Greatest_common_divisor)
 - Extended Euclid's Algorithm
 
-#### Lesson 2
+#### Lesson 2 - [source code](AlgorithmsSwift/RandomizedAlgorithms/RA2.swift)
+- Euler's Theorem
 - RSA Algorithm and Implementation
 - Primality Tests
 
