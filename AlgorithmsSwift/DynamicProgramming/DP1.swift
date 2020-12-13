@@ -49,7 +49,7 @@ class DP1 {
                 time += 1
                 dp[i] = dp[i - 1] + dp[i-2]
             }
-            return dp[n]
+            return dp.last!
         }
     }
     /**
@@ -83,8 +83,8 @@ class DP1 {
          The dynamic method used to find the longest length of common subsequence of two different string.
          The runtime is O(N^2).
          
-         - Parameter string1:
-         - Parameter string2:
+         - Parameter string1: The first string.
+         - Parameter string2: The second string.
          
          - Returns: An integer indicates the length of the longest subsequence.
          */
@@ -112,7 +112,7 @@ class DP1 {
                     }
                 }
             }
-            return dp[dp.count - 1][dp[0].count - 1]
+            return dp.last!.last!
         }
     }
 }
