@@ -29,7 +29,7 @@ class RandomizedAlgorithmsTests: XCTestCase {
     func testMultiplicativeInverses() {
         var input = (x: 3, N: 11)
         let expected = 4
-        XCTAssertEqual(expected, ra1.multiplicativeInverse(&input.x, input.N))
+        XCTAssertEqual(expected, RA1.multiplicativeInverse(&input.x, input.N))
     }
     
     // MARK: Euclid Algorithm
