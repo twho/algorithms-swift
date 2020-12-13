@@ -82,6 +82,7 @@ class DP1 {
         /**
          The dynamic method used to find the longest length of common subsequence of two different string.
          The runtime is O(N^2).
+         Example: https://leetcode.com/problems/uncrossed-lines/
          
          - Parameter string1: The first string.
          - Parameter string2: The second string.
@@ -93,16 +94,31 @@ class DP1 {
             let strArr2 = Array(string2)
             var dp = Array(repeating: Array(repeating: 0, count: strArr2.count), count: strArr1.count)
             for i in 0..<dp.count {
-                // Build up the first string
+                /**
+                 Build up the first string. The i in dp means the longest subsequence
+                 we can find until index i in the first string.
+                 */
                 for j in 0..<dp[i].count {
-                    // Build up the second string
+                    /**
+                     Build up the second string. The j in dp means the longest subsequence
+                     we can find until index j in the second string
+                     */
                     if strArr1[i] == strArr2[j] {
                         dp[i][j] = 1
                         if i > 0, j > 0 {
+                            /**
+                             Since the current one equals to each other, we add it up to the
+                             largest we can find in i - 1 of string1 and j - 1 of string2.
+                             */
                             dp[i][j] += dp[i - 1][j - 1]
                         }
                     } else {
                         if j > 0, i > 0 {
+                            /**
+                             If the current ones are not equal, we want to find the largest possible in the
+                             first i - 1 of string1 and first j in string2 or the first i of string1 and
+                             the first j - 1 in string2
+                             */
                             dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
                         } else if i > 0 {
                             dp[i][j] = dp[i - 1][j]
