@@ -30,7 +30,7 @@
 - RSA Algorithm and Implementation
 - Primality Tests
 
-#### Lesson 3
+#### Lesson 3 - [source code](AlgorithmsSwift/RandomizedAlgorithms/RA3.swift)
 - Implementation of Hash Map
 - Implementation of Bloom Filter
 

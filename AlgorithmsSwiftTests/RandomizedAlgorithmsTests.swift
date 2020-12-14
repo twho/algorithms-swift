@@ -142,4 +142,45 @@ class RandomizedAlgorithmsTests: XCTestCase {
         let input = 197
         XCTAssertTrue(ra2.isPrimeByFermat(input, 100))
     }
+    
+    // MARK: HashMap
+    func testHashMapImplementation() {
+        let hashmap = HashMap<Int, String>(10)
+        hashmap.add("this", forKey: 1)
+        hashmap.add("coder", forKey: 2)
+        hashmap.add("hello", forKey: 1)
+        hashmap.add("hi", forKey: 5)
+        XCTAssertEqual(3, hashmap.size)
+        XCTAssertEqual("hello", hashmap.remove(forKey: 1))
+        XCTAssertNil(hashmap.get(1))
+        XCTAssertEqual(2, hashmap.size)
+        XCTAssertFalse(hashmap.isEmpty)
+    }
+    
+    // MARK: Bloom Filter
+    func testBloomFilter() {
+        let bloomFilter = RA3.BloomFilter(1024, 0.01)
+        let wordPresent = ["abound", "abounds","abundance", "abundant", "accessable",
+                           "bloom", "blossom", "bolster", "bonny", "bonus", "bonuses",
+                           "coherent", "cohesive", "colorful", "comely", "comfort",
+                           "gems","generosity", "generous", "generously", "genial"]
+        let wordAbsent = ["bluff", "cheater", "hate", "war", "humanity",
+                          "racism", "hurt", "nuke", "gloomy", "facebook",
+                          "geeksforgeeks", "twitter"]
+        bloomFilter.add(wordPresent)
+        // All words inserted must be identified.
+        for word in wordPresent {
+            XCTAssertTrue(bloomFilter.contains(word))
+        }
+        // All words the do not exist should not be found, or at most be found 1% of the time.
+        var count = 0
+        for _ in 1...100 {
+            for word in wordAbsent {
+                if bloomFilter.contains(word) {
+                    count += 1
+                }
+            }
+        }
+        XCTAssertLessThanOrEqual(count, wordAbsent.count)
+    }
 }

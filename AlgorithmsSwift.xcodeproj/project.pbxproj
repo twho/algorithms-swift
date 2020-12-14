@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49032F932586D34300A3EDA0 /* RA3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49032F922586D34300A3EDA0 /* RA3.swift */; };
+		49032F972586D4F200A3EDA0 /* HashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49032F962586D4F200A3EDA0 /* HashMap.swift */; };
+		49032FA02586DE4C00A3EDA0 /* HashMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49032F962586D4F200A3EDA0 /* HashMap.swift */; };
+		49032FA32586DFDF00A3EDA0 /* RA3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49032F922586D34300A3EDA0 /* RA3.swift */; };
 		49B3A312258572E300369FAB /* RA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B3A311258572E300369FAB /* RA1.swift */; };
 		49B3A3182585730000369FAB /* RandomizedAlgorithmsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B3A3172585730000369FAB /* RandomizedAlgorithmsTests.swift */; };
 		49B3A31B2585787500369FAB /* RA1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49B3A311258572E300369FAB /* RA1.swift */; };
@@ -69,6 +73,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		49032F922586D34300A3EDA0 /* RA3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RA3.swift; sourceTree = "<group>"; };
+		49032F962586D4F200A3EDA0 /* HashMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashMap.swift; sourceTree = "<group>"; };
 		49B3A311258572E300369FAB /* RA1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RA1.swift; sourceTree = "<group>"; };
 		49B3A3172585730000369FAB /* RandomizedAlgorithmsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomizedAlgorithmsTests.swift; sourceTree = "<group>"; };
 		49B3A31E25857C5100369FAB /* RA2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RA2.swift; sourceTree = "<group>"; };
@@ -125,6 +131,7 @@
 			children = (
 				49B3A311258572E300369FAB /* RA1.swift */,
 				49B3A31E25857C5100369FAB /* RA2.swift */,
+				49032F922586D34300A3EDA0 /* RA3.swift */,
 			);
 			path = RandomizedAlgorithms;
 			sourceTree = "<group>";
@@ -225,6 +232,7 @@
 			isa = PBXGroup;
 			children = (
 				688A33842546957D00F76C56 /* Graph.swift */,
+				49032F962586D4F200A3EDA0 /* HashMap.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -320,6 +328,7 @@
 			files = (
 				49B3A312258572E300369FAB /* RA1.swift in Sources */,
 				688A33852546957D00F76C56 /* Graph.swift in Sources */,
+				49032F972586D4F200A3EDA0 /* HashMap.swift in Sources */,
 				68115D2F255E605A0090C5A8 /* LP4.swift in Sources */,
 				680F03A625535FB600D187FF /* MF4.swift in Sources */,
 				68115D33255E6DBD0090C5A8 /* DP1.swift in Sources */,
@@ -328,6 +337,7 @@
 				68115D28255E10C30090C5A8 /* LP3.swift in Sources */,
 				68331625255D12E3004CFF39 /* LP2.swift in Sources */,
 				680F03962551306400D187FF /* MF2.swift in Sources */,
+				49032F932586D34300A3EDA0 /* RA3.swift in Sources */,
 				688A33802546933100F76C56 /* GR1.swift in Sources */,
 				68182D78254CDDA80000C39D /* MF1.swift in Sources */,
 				6815E5FE2554BA8E0011C165 /* MF5.swift in Sources */,
@@ -349,6 +359,7 @@
 			files = (
 				49B3A31B2585787500369FAB /* RA1.swift in Sources */,
 				680F03922550D2BA00D187FF /* MF1.swift in Sources */,
+				49032FA02586DE4C00A3EDA0 /* HashMap.swift in Sources */,
 				68331586255B8699004CFF39 /* LP1.swift in Sources */,
 				688A33A72546990000F76C56 /* Graph.swift in Sources */,
 				688A339C2546986F00F76C56 /* GR1.swift in Sources */,
@@ -361,6 +372,7 @@
 				49B3A3182585730000369FAB /* RandomizedAlgorithmsTests.swift in Sources */,
 				68115D2B255E11630090C5A8 /* LP3.swift in Sources */,
 				6815E5FA2554A41D0011C165 /* MF4.swift in Sources */,
+				49032FA32586DFDF00A3EDA0 /* RA3.swift in Sources */,
 				6833161E255D10D3004CFF39 /* SimplexDS.swift in Sources */,
 				6815E6012554BA980011C165 /* MF5.swift in Sources */,
 				68115D36255E6DC50090C5A8 /* DP1.swift in Sources */,
