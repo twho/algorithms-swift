@@ -7,7 +7,7 @@
 
 class GR1 {
     /**
-     The function traverses through the undirected graph using DFS method. Runtime: O(V + E), where V represents vertices and E represents edges.
+     The function traverses through a directed graph using DFS method. Runtime: O(V + E), where V represents vertices and E represents edges.
      
      - Parameter graph: A directed graph.
      
@@ -47,7 +47,7 @@ class GR1 {
         output.append(vertex)
     }
     /**
-     The function traverses through the undirected graph using BFS method. Runtime: O(V + E), where V represents vertices and E represents edges.
+     The function traverses through a directed graph using BFS method. Runtime: O(V + E), where V represents vertices and E represents edges.
      
      - Parameter graph: A directed graph.
      
@@ -83,7 +83,7 @@ class GR1 {
      Find strongly connected componenets by DFS. SCC is defined as a group of components in a directed graph that have edges allow them to reach each other.
      It takes two rounds of DFS to find SCCs. Runtime: O(V + E)
      
-     - Parameter graph: An undirected graph.
+     - Parameter graph: A directed graph.
      
      - Returns: A 2D set. Each element in the set represents a SCC, which is a group of components in the graph.
      */
@@ -142,7 +142,7 @@ class GR1 {
      
      - Parameter graph: A directed graph.
      
-     - Returns: A boolean indicates if the directed
+     - Returns: A boolean indicates if the directed graph has a cycle.
      */
     func detectCycleInDirectedGraph(_ graph: Graph) -> Bool {
         var visited = Set<Vertex>()
