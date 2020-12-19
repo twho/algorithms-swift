@@ -36,7 +36,8 @@
 
 ### [Divide and Conquer](https://classroom.udacity.com/courses/ud401/lessons/10160749579/concepts/101586102940923)
 #### Lesson 1
-- Multiplication Algorithms - naive and faster approaches
+- Merge Sort
+- Multiplication using Divide and Conquer approach
 
 #### Lesson 2
 - Kth Smallest and Kth Largest in an unsorted array
