@@ -11,8 +11,7 @@ class MF1 {
      In Ford-Fulkerson method, a Residual Graph has edges with valuescalled residual capacity, which is equal to original capacity of the
      edge minus current flow. Besides, using DFS only promises to find a path from source to sink in the residual graph, not necessarily a
      shortest possible path. The Runtime of the algorithm is O(CE), where C is the count of possible maximum flows and E is the number of edges.
-     Note that Ford-Fulkerson 
-     
+     Note that Ford-Fulkerson.
      Reference: https://www.cs.umd.edu/class/fall2017/cmsc451-0101/Lects/lect15-flow-ford-fulk.pdf
      
      - Parameter graph: An directed graph.
@@ -39,7 +38,7 @@ class MF1 {
         visited.insert(start)
         if let edges = adjacencyLists[start] {
             // Shuffling is required by the tests but not the implementation itself. We need to
-            // huffle to get different results since the algorithm does not guarantee good results.
+            // shuffle to get different results since the algorithm does not guarantee good results.
             let shuffledEdges = edges.shuffled()
             for edge in shuffledEdges {
                 let sourceKey = Graph.getKey(edge.src, edge.dest)
@@ -49,17 +48,10 @@ class MF1 {
                     // Update capacities
                     if dfsFlow > 0 {
                         // Update residual capacities of the edges.
-                        if rGraph[sourceKey] == nil {
-                            rGraph[sourceKey] = 0
-                        }
-                        rGraph[sourceKey]! -= dfsFlow
-                        
+                        rGraph[sourceKey, default: 0] -= dfsFlow
                         // Update residual capacities of the reverse edges.
                         let destinationKey = Graph.getKey(edge.dest, edge.src)
-                        if rGraph[destinationKey] == nil {
-                            rGraph[destinationKey] = 0
-                        }
-                        rGraph[destinationKey]! += dfsFlow
+                        rGraph[destinationKey, default: 0] += dfsFlow
                         return dfsFlow
                     }
                 }

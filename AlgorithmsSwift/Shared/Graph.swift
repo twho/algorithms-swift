@@ -61,11 +61,7 @@ class Graph {
         let vertex1 = Vertex(from)
         let vertex2 = Vertex(to)
         let edge = Edge(vertex1, vertex2, weight)
-        
-        if self.adjacencyLists[vertex1] == nil {
-            self.adjacencyLists[vertex1] = Set<Edge>()
-        }
-        self.adjacencyLists[vertex1]!.insert(edge)
+        self.adjacencyLists[vertex1, default: []].insert(edge)
         
         // Create a list for the other vertex so it appears in graph.
         if self.adjacencyLists[vertex2] == nil {
