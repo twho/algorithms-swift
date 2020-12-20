@@ -2,7 +2,7 @@
 //  DivideAndConquerTests.swift
 //  AlgorithmsSwiftTests
 //
-//  Created by Amy Shih on 12/18/20.
+//  Created by Michael Ho on 12/18/20.
 //
 
 import XCTest
