@@ -10,6 +10,7 @@ import XCTest
 class DivideAndConquerTests: XCTestCase {
     let dc1 = DC1()
     let dc2 = DC2()
+    let dc3 = DC3()
     
     // MARK: Merge Sort
     func testMergeSort() {
@@ -67,5 +68,18 @@ class DivideAndConquerTests: XCTestCase {
         let input = [2, 3, 100, 95, 33, 65, 43, 77, 10, 10, 10, 45]
         let expected = [2, 3, 10, 10, 10, 33, 43, 45, 65, 77, 95, 100]
         XCTAssertEqual(expected, dc2.quickSort(input))
+    }
+    
+    // MARK: Geometric Series
+    func testGeometricSeriesSum() {
+        let input = (a: 1.0, r: 0.5, n: 10)
+        let expected = 1.99805
+        XCTAssertEqual(expected, dc3.sumOfGeometricSeries(input.a, input.r, input.n), accuracy: 0.01 * expected)
+    }
+    
+    func testGeometricSeriesSumByFormula() {
+        let input = (a: 1.0, r: 0.5, n: 10)
+        let expected = 1.99805
+        XCTAssertEqual(expected, dc3.sumOfGSByFormula(input.a, input.r, input.n), accuracy: 0.01 * expected)
     }
 }
