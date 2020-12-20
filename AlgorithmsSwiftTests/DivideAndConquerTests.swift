@@ -11,6 +11,7 @@ class DivideAndConquerTests: XCTestCase {
     let dc1 = DC1()
     let dc2 = DC2()
     let dc3 = DC3()
+    let dc4 = DC4()
     
     // MARK: Merge Sort
     func testMergeSort() {
@@ -81,5 +82,12 @@ class DivideAndConquerTests: XCTestCase {
         let input = (a: 1.0, r: 0.5, n: 10)
         let expected = 1.99805
         XCTAssertEqual(expected, dc3.sumOfGSByFormula(input.a, input.r, input.n), accuracy: 0.01 * expected)
+    }
+    
+    // MARK: Polynomial Multiplication
+    func testPolynomialMultiplication() {
+        let input = (A: [5, 0, 10, 6], B: [1, 2, 4])
+        let expected = [5, 10, 30, 26, 52, 24]
+        XCTAssertEqual(expected, dc4.multiplication(input.A, input.B))
     }
 }

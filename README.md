@@ -44,10 +44,10 @@
 - Find Kth Largest in an unsorted array
 - Quick Sort
 
-#### Lesson 3
+#### Lesson 3 - [source code](AlgorithmsSwift/DivideAndConquer/DC3.swift)
 - Sum of Geometric Series
 
-#### Lesson 4
+#### Lesson 4 - [source code](AlgorithmsSwift/DivideAndConquer/DC4.swift)
 - Polynomial Multiplication
 - Fast Fourier Transform - FFT
 
