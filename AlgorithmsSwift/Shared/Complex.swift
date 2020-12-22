@@ -6,15 +6,15 @@
 //
 
 struct Complex {
-    let real: Float
-    let imaginary: Float
+    let real: Double
+    let imaginary: Double
     
     init() {
         self.real = 0.0
         self.imaginary = 0.0
     }
     
-    init(real: Float, imaginary: Float) {
+    init(real: Double, imaginary: Double) {
         self.real = real
         self.imaginary = imaginary
     }
