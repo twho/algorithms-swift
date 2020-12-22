@@ -25,6 +25,8 @@
 		49FF6BCF258E984C00138B0C /* DC3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF6BCB258E984200138B0C /* DC3.swift */; };
 		49FF6BD3258FE2F800138B0C /* DC4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF6BD2258FE2F800138B0C /* DC4.swift */; };
 		49FF6BD625900FD600138B0C /* DC4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF6BD2258FE2F800138B0C /* DC4.swift */; };
+		49FF714525917C3300F196FF /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF714425917C3300F196FF /* Complex.swift */; };
+		49FF714825917C7200F196FF /* Complex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FF714425917C3300F196FF /* Complex.swift */; };
 		680F03922550D2BA00D187FF /* MF1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68182D77254CDDA80000C39D /* MF1.swift */; };
 		680F03962551306400D187FF /* MF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F03952551306400D187FF /* MF2.swift */; };
 		680F03992551306600D187FF /* MF2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680F03952551306400D187FF /* MF2.swift */; };
@@ -92,6 +94,7 @@
 		49B3A31E25857C5100369FAB /* RA2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RA2.swift; sourceTree = "<group>"; };
 		49FF6BCB258E984200138B0C /* DC3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DC3.swift; sourceTree = "<group>"; };
 		49FF6BD2258FE2F800138B0C /* DC4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DC4.swift; sourceTree = "<group>"; };
+		49FF714425917C3300F196FF /* Complex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Complex.swift; sourceTree = "<group>"; };
 		680F03952551306400D187FF /* MF2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF2.swift; sourceTree = "<group>"; };
 		680F039E25521CAA00D187FF /* MF3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF3.swift; sourceTree = "<group>"; };
 		680F03A525535FB600D187FF /* MF4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MF4.swift; sourceTree = "<group>"; };
@@ -260,6 +263,7 @@
 			children = (
 				688A33842546957D00F76C56 /* Graph.swift */,
 				49032F962586D4F200A3EDA0 /* HashMap.swift */,
+				49FF714425917C3300F196FF /* Complex.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -376,6 +380,7 @@
 				681870E8257C4C830094B367 /* DP2.swift in Sources */,
 				680F039F25521CAA00D187FF /* MF3.swift in Sources */,
 				682F8DD22547E0AC00C371FF /* GR2.swift in Sources */,
+				49FF714525917C3300F196FF /* Complex.swift in Sources */,
 				6833157D255B6CFE004CFF39 /* LP1.swift in Sources */,
 				68EC2E042549DA1C00623738 /* GR3.swift in Sources */,
 				68EC2F4B254B79B500623738 /* GR4.swift in Sources */,
@@ -407,6 +412,7 @@
 				49032FA32586DFDF00A3EDA0 /* RA3.swift in Sources */,
 				6833161E255D10D3004CFF39 /* SimplexDS.swift in Sources */,
 				6815E6012554BA980011C165 /* MF5.swift in Sources */,
+				49FF714825917C7200F196FF /* Complex.swift in Sources */,
 				68115D36255E6DC50090C5A8 /* DP1.swift in Sources */,
 				49FF6BCF258E984C00138B0C /* DC3.swift in Sources */,
 				68331621255D10D6004CFF39 /* SimplexValue.swift in Sources */,
