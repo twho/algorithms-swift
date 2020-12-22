@@ -12,6 +12,7 @@ class DivideAndConquerTests: XCTestCase {
     let dc2 = DC2()
     let dc3 = DC3()
     let dc4 = DC4()
+    let dc5 = DC5()
     
     // MARK: Merge Sort
     func testMergeSort() {
@@ -86,8 +87,33 @@ class DivideAndConquerTests: XCTestCase {
     
     // MARK: Polynomial Multiplication
     func testPolynomialMultiplication() {
-        let input = (A: [5, 0, 10, 6], B: [1, 2, 4])
-        let expected = [5, 10, 30, 26, 52, 24]
+        let input: (A: [Double], B: [Double]) = ([5, 0, 10, 6], [1, 2, 4])
+        let expected: [Double] = [5, 10, 30, 26, 52, 24]
         XCTAssertEqual(expected, dc4.multiplication(input.A, input.B))
+    }
+    
+    // MARK: FFT Polynomial Multiplication
+    func testFFTPolynomialMultiplication1() {
+        let input: (A: [Double], B: [Double]) = ([5, 0, 10, 6], [1, 2, 4, 5])
+        let n = input.A.count * 2
+        let expected = dc4.multiplication(input.A, input.B)
+        let output = dc5.multiply(input.A, input.B, n, dc5.getOmega(n, false), dc5.getOmega(n, true))
+        var idx = 0
+        while idx < expected.count {
+            XCTAssertEqual(expected[idx], output[idx], accuracy: 0.01)
+            idx += 1
+        }
+    }
+    
+    func testFFTPolynomialMultiplication2() {
+        let input: (A: [Double], B: [Double]) = ([5, 0, 10, 6, 4, 5, 5, 0], [1, 2, 4, 5, 5, 0, 10, 6])
+        let n = input.A.count * 2
+        let expected = dc4.multiplication(input.A, input.B)
+        let output = dc5.multiply(input.A, input.B, n, dc5.getOmega(n, false), dc5.getOmega(n, true))
+        var idx = 0
+        while idx < expected.count {
+            XCTAssertEqual(expected[idx], output[idx], accuracy: 0.01)
+            idx += 1
+        }
     }
 }
