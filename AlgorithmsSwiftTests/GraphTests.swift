@@ -132,13 +132,15 @@ class GraphTests: XCTestCase {
         graph.addEdge(from: 3, to: 1)   // add edge 3-1
         graph.addEdge(from: 4, to: 1)   // add edge 4-1
         // Source vertices are 4 and 5.
-        let possibleDFSPaths = [
+        let possiblePaths = [
+            [5, 4, 2, 0, 3, 1],
             [4, 5, 0, 2, 3, 1],
             [4, 5, 2, 3, 1, 0],
             [5, 2, 3, 4, 0, 1],
             [5, 2, 3, 4, 1, 0]
         ]
-        XCTAssertTrue(possibleDFSPaths.contains(gr1.topologicalSortByDFS(graph)))
+        XCTAssertTrue(possiblePaths.contains(gr1.topologicalSortByDFS(graph)))
+        XCTAssertTrue(possiblePaths.contains(gr1.topologicalSortByBFS(graph)))
     }
     
     func testTopologicalSort2() {
@@ -153,6 +155,7 @@ class GraphTests: XCTestCase {
         // Source vertices is 4.
         let expected = [4, 3, 2, 1, 0]
         XCTAssertEqual(expected, gr1.topologicalSortByDFS(graph))
+        XCTAssertEqual(expected, gr1.topologicalSortByBFS(graph))
     }
     
     func testDirectedGraphCycleDetection1() {

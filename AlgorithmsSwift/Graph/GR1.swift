@@ -251,9 +251,25 @@ class GR1 {
      */
     func topologicalSortByBFS(_ graph: Graph) -> [Int] {
         var output = [Vertex]()
+        var indegrees = graph.calculateInDegreeOfVertices()
+        var queue = indegrees.keys.filter { indegrees[$0]! == 0 }
         var visited = Set<Vertex>()
-        
-        let indegrees = graph.calculateInDegreeOfVertices()
-        return []
+        while !queue.isEmpty {
+            let first = queue.removeFirst()
+            output.append(first)
+            visited.insert(first)
+            if let edges = graph.adjacencyLists[first] {
+                for edge in edges {
+                    indegrees[edge.dest]! -= 1
+                    if !visited.contains(edge.dest), indegrees[edge.dest]! == 0 {
+                        queue.append(edge.dest)
+                    }
+                }
+            }
+        }
+        // The reverse order of BFS reflects topological sort.
+        return output.map { (vertex) -> Int in
+            return vertex.val
+        }
     }
 }
