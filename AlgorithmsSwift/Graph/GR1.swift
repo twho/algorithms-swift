@@ -80,6 +80,63 @@ class GR1 {
         }
     }
     /**
+     Search the graph from both sides. It is useful while searching a path between known start and end points.
+     
+     - Parameter graph: An undirected graph.
+     
+     - Returns: The distance of shortest path from start to end.
+     */
+    func bidirectionalBFS(_ graph: Graph, _ start: Int, _ end: Int) -> Int {
+        let startV = Vertex(start)
+        let endV = Vertex(end)
+        // Set up inital state
+        // Record visited vertices from the start point
+        var sVisited = Set([startV])
+        // Record visited vertices from the end point
+        var eVisited = Set([endV])
+        // Use two queues
+        var begins = [startV]
+        var ends = [endV]
+        var distance = 0
+        while !begins.isEmpty, !ends.isEmpty {
+            let tempBegins = begins
+            begins = []
+            for begin in tempBegins {
+                if eVisited.contains(begin) {
+                    return distance * 2
+                }
+                if let startEdges = graph.adjacencyLists[begin] {
+                    for startEdge in startEdges {
+                        if !sVisited.contains(startEdge.dest) {
+                            sVisited.insert(startEdge.dest)
+                            begins.append(startEdge.dest)
+                        }
+                        if eVisited.contains(startEdge.dest) {
+                            return distance * 2 + 1
+                        }
+                    }
+                }
+            }
+            let tempEnds = ends
+            ends = []
+            for end in tempEnds {
+                if let endEdges = graph.adjacencyLists[end] {
+                    for endEdge in endEdges {
+                        if !eVisited.contains(endEdge.dest) {
+                            eVisited.insert(endEdge.dest)
+                            ends.append(endEdge.dest)
+                        }
+                        if sVisited.contains(endEdge.dest) {
+                            return distance * 2 + 2
+                        }
+                    }
+                }
+            }
+            distance += 1
+        }
+        return -1
+    }
+    /**
      Find strongly connected componenets by DFS. SCC is defined as a group of components in a directed graph that have edges allow them to reach each other.
      It takes two rounds of DFS to find SCCs. Runtime: O(V + E)
      
@@ -112,30 +169,6 @@ class GR1 {
             }
         }
         return output
-    }
-    /**
-     The function that output the value of vertices in topological order using DFS method. In topological sort, the vertex used as the source of the edge
-     must be printed before the destination of the edge. Note that a graph could have multiple topological output. In addition, a graph has to be
-     a directed acyclic graph (DAG) in order to be sorted topologically. Runtime: O(V + E)
-     
-     - Parameter graph: A directed graph.
-     
-     - Returns: An integer array of topological sorting result.
-     */
-    func topologicalSortByDFS(_ graph: Graph) -> [Int] {
-        var output = [Vertex]()
-        var visited = Set<Vertex>()
-        let sourceVertices = graph.getSourceVertices()
-        
-        for sourceVertex in sourceVertices {
-            if !visited.contains(sourceVertex) {
-                dfsHelper(sourceVertex, graph.adjacencyLists, &visited, &output)
-            }
-        }
-        // The reverse order of DFS reflects topological sort. Use a stack during traversal.
-        return output.reversed().map { (vertex) -> Int in
-            return vertex.val
-        }
     }
     /**
      The function adapts topological sorting method and add a set to record current exploration.
@@ -183,5 +216,44 @@ class GR1 {
         }
         exploration.remove(vertex)
         return false
+    }
+    // MARK: - Topological Sort
+    /**
+     Topological order using DFS method. In topological sort, the vertex used as the source of the edge
+     must be printed before the destination of the edge. Note that a graph could have multiple topological output.
+     In addition, a graph has to be a directed acyclic graph (DAG) in order to be sorted topologically. Runtime: O(V + E)
+     
+     - Parameter graph: A directed graph.
+     
+     - Returns: An integer array of topological sorting result.
+     */
+    func topologicalSortByDFS(_ graph: Graph) -> [Int] {
+        var output = [Vertex]()
+        var visited = Set<Vertex>()
+        let sourceVertices = graph.getSourceVertices()
+        
+        for sourceVertex in sourceVertices {
+            if !visited.contains(sourceVertex) {
+                dfsHelper(sourceVertex, graph.adjacencyLists, &visited, &output)
+            }
+        }
+        // The reverse order of DFS reflects topological sort. Use a stack during traversal.
+        return output.reversed().map { (vertex) -> Int in
+            return vertex.val
+        }
+    }
+    /**
+     Topological order using BFS method. In topological sort.
+     
+     - Parameter graph: A directed graph.
+     
+     - Returns: An integer array of topological sorting result.
+     */
+    func topologicalSortByBFS(_ graph: Graph) -> [Int] {
+        var output = [Vertex]()
+        var visited = Set<Vertex>()
+        
+        let indegrees = graph.calculateInDegreeOfVertices()
+        return []
     }
 }
