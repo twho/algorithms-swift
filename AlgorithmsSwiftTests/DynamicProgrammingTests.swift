@@ -80,7 +80,7 @@ class DynamicProgrammingTests: XCTestCase {
     }
     
     func testDijkstraShortestPath() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1, weight: 1) // add edge 0-1
         graph.addEdge(from: 0, to: 2, weight: 4) // add edge 0-2
         graph.addEdge(from: 1, to: 2, weight: 3) // add edge 1-2
@@ -94,7 +94,7 @@ class DynamicProgrammingTests: XCTestCase {
     }
     
     func testBellmanFordShortestPath() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1, weight: -1) // add edge 0-1
         graph.addEdge(from: 0, to: 2, weight: 4)  // add edge 0-2
         graph.addEdge(from: 1, to: 2, weight: 3)  // add edge 1-2
@@ -110,7 +110,7 @@ class DynamicProgrammingTests: XCTestCase {
     }
     
     func testBellmanFordShortestPathWithNegativeCycle() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1, weight: 1)   // add edge 0-1
         graph.addEdge(from: 1, to: 2, weight: -1)  // add edge 1-2
         graph.addEdge(from: 2, to: 3, weight: -1)  // add edge 2-3

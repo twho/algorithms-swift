@@ -15,7 +15,7 @@ class MaxFlowTests: XCTestCase {
     
     // MARK: - Maximum Flow by Ford-Fulkerson (DFS)
     func testMaxiumumFlowByFF() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1, weight: 16)   // add edge 0-1
         graph.addEdge(from: 0, to: 2, weight: 13)   // add edge 0-2
         graph.addEdge(from: 1, to: 2, weight: 10)   // add edge 1-2
@@ -43,7 +43,7 @@ class MaxFlowTests: XCTestCase {
     
     // MARK: - Max-flow Min st-cut by Edmonds-Karp
     func testMaxFlowMinCutByEK() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1, weight: 16)   // add edge 0-1
         graph.addEdge(from: 0, to: 2, weight: 13)   // add edge 0-2
         graph.addEdge(from: 1, to: 2, weight: 10)   // add edge 1-2
@@ -60,7 +60,7 @@ class MaxFlowTests: XCTestCase {
     
     // MARK: - Maximum Flow by Edmonds-Karp
     func testMaxiumumFlowByEK() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1, weight: 16)   // add edge 0-1
         graph.addEdge(from: 0, to: 2, weight: 13)   // add edge 0-2
         graph.addEdge(from: 1, to: 2, weight: 10)   // add edge 1-2
@@ -77,7 +77,7 @@ class MaxFlowTests: XCTestCase {
     
     // MARK: - Graph circulation
     func testGraphCirculation1() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 2, weight: 3)    // add edge 0-2
         graph.addEdge(from: 0, to: 3, weight: 1)    // add edge 0-3
         graph.addEdge(from: 1, to: 0, weight: 2)    // add edge 1-0
@@ -93,7 +93,7 @@ class MaxFlowTests: XCTestCase {
     }
     
     func testGraphCirculation2() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 3, weight: 6)    // add edge 0-3
         graph.addEdge(from: 0, to: 4, weight: 7)    // add edge 0-4
         graph.addEdge(from: 1, to: 3, weight: 7)    // add edge 1-3

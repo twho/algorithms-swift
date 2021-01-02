@@ -18,7 +18,7 @@ class GR2 {
      - Returns: A boolean indicates if the formula is satisfiable.
      */
     func is2Satisfiable(_ variable: Int, _ clauses: Int, clauseLeft: [Int], clauseRigt: [Int]) -> Bool {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         var idx = 0
         while idx < clauseLeft.count && idx < clauseRigt.count {
             graph.addEdge(from: clauseLeft[idx], to: clauseRigt[idx])

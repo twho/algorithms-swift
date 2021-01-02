@@ -15,7 +15,7 @@ class GraphTests: XCTestCase {
 
     // MARK: - DFS
     func testDFSTraverse() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1)   // add edge 0-1
         graph.addEdge(from: 0, to: 2)   // add edge 0-2
         graph.addEdge(from: 2, to: 6)   // add edge 2-6
@@ -32,7 +32,7 @@ class GraphTests: XCTestCase {
     
     // MARK: - BFS
     func testBFSTraverse() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1)   // add edge 0-1
         graph.addEdge(from: 0, to: 3)   // add edge 0-3
         graph.addEdge(from: 0, to: 8)   // add edge 0-8
@@ -47,9 +47,47 @@ class GraphTests: XCTestCase {
         XCTAssertEqual(expected, gr1.bfs(graph))
     }
     
+    // MARK: - Bidirectional BFS
+    func testBidirectionalBFS1() {
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 1)   // add edge 0-1
+        graph.addEdge(from: 0, to: 3)   // add edge 0-3
+        graph.addEdge(from: 3, to: 2)   // add edge 3-2
+        graph.addEdge(from: 2, to: 5)   // add edge 2-5
+        graph.addEdge(from: 3, to: 4)   // add edge 3-4
+        graph.addEdge(from: 4, to: 6)   // add edge 4-8
+        graph.addEdge(from: 5, to: 6)   // add edge 5-6
+        XCTAssertEqual(3, gr1.bidirectionalBFS(graph, 0, 6))
+        XCTAssertEqual(-1, gr1.bidirectionalBFS(graph, 0, 7))
+        // Add another shorter path to graph
+        graph.addEdge(from: 0, to: 7)   // add edge 0-7
+        graph.addEdge(from: 7, to: 6)   // add edge 7-6
+        XCTAssertEqual(2, gr1.bidirectionalBFS(graph, 0, 6))
+    }
+    
+    func testBidirectionalBFS2() {
+        let graph = Graph(isDirected: false)
+        graph.addEdge(from: 0, to: 4)   // add edge 0-4
+        graph.addEdge(from: 1, to: 4)   // add edge 1-4
+        graph.addEdge(from: 2, to: 5)   // add edge 2-5
+        graph.addEdge(from: 3, to: 5)   // add edge 3-5
+        graph.addEdge(from: 4, to: 6)   // add edge 4-6
+        graph.addEdge(from: 5, to: 6)   // add edge 5-6
+        graph.addEdge(from: 6, to: 7)   // add edge 6-7
+        graph.addEdge(from: 7, to: 8)   // add edge 7-8
+        graph.addEdge(from: 8, to: 9)   // add edge 8-9
+        graph.addEdge(from: 8, to: 10)  // add edge 8-10
+        graph.addEdge(from: 9, to: 11)  // add edge 9-11
+        graph.addEdge(from: 9, to: 12)  // add edge 9-12
+        graph.addEdge(from: 10, to: 13) // add edge 10-13
+        graph.addEdge(from: 10, to: 14) // add edge 10-14
+        let expected = 6
+        XCTAssertEqual(expected, gr1.bidirectionalBFS(graph, 0, 14))
+    }
+    
     // MARK: - Strongly Connected Components
     func testFindSCCs1() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 1, to: 0)   // add edge 1-0
         graph.addEdge(from: 0, to: 2)   // add edge 0-2
         graph.addEdge(from: 2, to: 1)   // add edge 2-1
@@ -64,7 +102,7 @@ class GraphTests: XCTestCase {
     }
     
     func testFindSCCs2() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1)   // add edge 0-1
         graph.addEdge(from: 1, to: 2)   // add edge 1-2
         graph.addEdge(from: 2, to: 3)   // add edge 2-3
@@ -86,7 +124,7 @@ class GraphTests: XCTestCase {
     
     // MARK: - Topological Sort
     func testTopologicalSort1() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 5, to: 0)   // add edge 5-0
         graph.addEdge(from: 4, to: 0)   // add edge 4-0
         graph.addEdge(from: 5, to: 2)   // add edge 5-2
@@ -104,7 +142,7 @@ class GraphTests: XCTestCase {
     }
     
     func testTopologicalSort2() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 4, to: 3)   // add edge 4-3
         graph.addEdge(from: 4, to: 2)   // add edge 4-2
         graph.addEdge(from: 3, to: 2)   // add edge 3-2
@@ -118,7 +156,7 @@ class GraphTests: XCTestCase {
     }
     
     func testDirectedGraphCycleDetection1() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 4, to: 3)   // add edge 4-3
         graph.addEdge(from: 4, to: 2)   // add edge 4-2
         graph.addEdge(from: 3, to: 2)   // add edge 3-2
@@ -130,7 +168,7 @@ class GraphTests: XCTestCase {
     }
     
     func testDirectedGraphCycleDetection2() {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         graph.addEdge(from: 0, to: 1)   // add edge 0-1
         graph.addEdge(from: 1, to: 2)   // add edge 1-2
         graph.addEdge(from: 0, to: 2)   // add edge 0-2

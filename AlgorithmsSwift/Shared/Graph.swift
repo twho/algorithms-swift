@@ -46,7 +46,7 @@ class Graph {
      
      - Parameter isDirected: Determine if the graph is directed or undirected.
      */
-    public init(isDirected: Bool = true) {
+    public init(isDirected: Bool) {
         self.isDirected = isDirected
         adjacencyLists = [Vertex : Set<Edge>]()
     }
@@ -80,7 +80,7 @@ class Graph {
      */
     public func getReversedGraph() -> Graph {
         guard self.isDirected else { fatalError("Graph is reversible only when it is directed.") }
-        let reversedGraph = Graph()
+        let reversedGraph = Graph(isDirected: true)
         for vertex in self.adjacencyLists.keys {
             if let edges = self.adjacencyLists[vertex] {
                 for edge in edges {
@@ -100,7 +100,7 @@ class Graph {
      
      - Returns: A dictionary with Vertex as keys and the in degree of the Vertex as values.
      */
-    private func calculateInDegreeOfVertices() -> [Vertex : Int] {
+    public func calculateInDegreeOfVertices() -> [Vertex : Int] {
         guard self.isDirected else { fatalError("Only calculates in degree in directed graph.") }
         // Set the initial in degree of every vertex to be 0.
         var inDegrees = [Vertex: Int]()
@@ -111,7 +111,7 @@ class Graph {
         for vertex in self.adjacencyLists.keys {
             if let edges = self.adjacencyLists[vertex] {
                 for edge in edges {
-                    inDegrees[edge.dest] = (inDegrees[edge.dest] ?? 0) + 1
+                    inDegrees[edge.dest, default: 0] += 1
                 }
             }
         }
@@ -182,7 +182,7 @@ class Graph {
      - Returns: A graph in its normal form.
      */
     public static func buildGraphFromWeightDictionary(_ weightDict: [String : Int]) -> Graph {
-        let graph = Graph()
+        let graph = Graph(isDirected: true)
         for key in weightDict.keys {
             let keyArr = key.components(separatedBy: ",")
             let source = Int(keyArr[0])!
